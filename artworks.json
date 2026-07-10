@@ -1,0 +1,733 @@
+{
+  "_comment": "Catálogo de obras. La imagen se baja en tiempo real desde Wikipedia (REST summary API) por 'wiki', a resolución ORIGINAL para máximo detalle. 'file' es un fallback (Wikimedia Special:FilePath). 'fav': true = sale con más frecuencia. Metadatos = ficha técnica estilo cartela de museo (en español).",
+  "artworks": [
+    {
+      "id": "pearl-earring",
+      "fav": true,
+      "wiki": "Girl_with_a_Pearl_Earring",
+      "title": "La joven de la perla",
+      "orig": "Meisje met de parel",
+      "artist": "Johannes Vermeer",
+      "year": "c. 1665",
+      "country": "Países Bajos",
+      "medium": "Óleo sobre lienzo",
+      "size": "44,5 × 39 cm",
+      "place": "Mauritshuis, La Haya",
+      "note": "El «Mona Lisa del norte»: un tronie sin identidad fija, iluminado por esa perla imposible que en realidad es apenas dos pinceladas de blanco."
+    },
+    {
+      "id": "wanderer",
+      "fav": true,
+      "wiki": "Wanderer_above_the_Sea_of_Fog",
+      "title": "El caminante sobre el mar de nubes",
+      "orig": "Der Wanderer über dem Nebelmeer",
+      "artist": "Caspar David Friedrich",
+      "year": "c. 1818",
+      "country": "Alemania",
+      "medium": "Óleo sobre lienzo",
+      "size": "94,8 × 74,8 cm",
+      "place": "Kunsthalle de Hamburgo",
+      "note": "Icono del Romanticismo alemán: la figura de espaldas (Rückenfigur) nos mete dentro del cuadro para contemplar lo sublime del paisaje."
+    },
+    {
+      "id": "nighthawks",
+      "fav": true,
+      "wiki": "Nighthawks",
+      "title": "Nighthawks (Halcones de la noche)",
+      "orig": "Nighthawks",
+      "artist": "Edward Hopper",
+      "year": "1942",
+      "country": "Estados Unidos",
+      "medium": "Óleo sobre lienzo",
+      "size": "84,1 × 152,4 cm",
+      "place": "Art Institute of Chicago",
+      "note": "La soledad urbana moderna: una cafetería nocturna sin puerta visible a la calle, cuatro figuras aisladas bajo la luz fluorescente."
+    },
+    {
+      "id": "starry-night",
+      "wiki": "The_Starry_Night",
+      "title": "La noche estrellada",
+      "orig": "De sterrennacht",
+      "artist": "Vincent van Gogh",
+      "year": "1889",
+      "country": "Países Bajos",
+      "medium": "Óleo sobre lienzo",
+      "size": "73,7 × 92,1 cm",
+      "place": "MoMA, Nueva York",
+      "note": "Pintada desde el sanatorio de Saint-Rémy, de memoria y de día: el cielo en remolino sobre un pueblo imaginado.",
+      "fav": true
+    },
+    {
+      "id": "mona-lisa",
+      "wiki": "Mona_Lisa",
+      "title": "La Gioconda (Mona Lisa)",
+      "orig": "La Gioconda",
+      "artist": "Leonardo da Vinci",
+      "year": "c. 1503–1519",
+      "country": "Italia",
+      "medium": "Óleo sobre tabla de álamo",
+      "size": "77 × 53 cm",
+      "place": "Museo del Louvre, París",
+      "note": "El sfumato de Leonardo disuelve los contornos; la sonrisa cambia según dónde mires por un efecto de visión periférica.",
+      "fav": true
+    },
+    {
+      "id": "great-wave",
+      "wiki": "The_Great_Wave_off_Kanagawa",
+      "title": "La gran ola de Kanagawa",
+      "orig": "神奈川沖浪裏",
+      "artist": "Katsushika Hokusai",
+      "year": "c. 1831",
+      "country": "Japón",
+      "medium": "Grabado ukiyo-e (xilografía)",
+      "size": "25,7 × 37,9 cm",
+      "place": "Serie: 36 vistas del monte Fuji",
+      "note": "La ola con garras a punto de romper sobre las barcas; al fondo, diminuto, el Fuji. Azul de Prusia recién importado a Japón.",
+      "fav": true
+    },
+    {
+      "id": "night-watch",
+      "wiki": "The_Night_Watch",
+      "title": "La ronda de noche",
+      "orig": "De Nachtwacht",
+      "artist": "Rembrandt van Rijn",
+      "year": "1642",
+      "country": "Países Bajos",
+      "medium": "Óleo sobre lienzo",
+      "size": "379,5 × 453,5 cm",
+      "place": "Rijksmuseum, Ámsterdam",
+      "note": "No es de noche: el barniz oscurecido engañó a todos. Un retrato de milicia convertido en escena en movimiento.",
+      "fav": true
+    },
+    {
+      "id": "birth-venus",
+      "wiki": "The_Birth_of_Venus",
+      "title": "El nacimiento de Venus",
+      "orig": "Nascita di Venere",
+      "artist": "Sandro Botticelli",
+      "year": "c. 1485",
+      "country": "Italia",
+      "medium": "Temple sobre lienzo",
+      "size": "172,5 × 278,9 cm",
+      "place": "Galería Uffizi, Florencia",
+      "note": "Venus llega a la orilla sobre una concha. Botticelli pintó sobre lienzo, raro en su época, y aligeró el color con yema de huevo.",
+      "fav": true
+    },
+    {
+      "id": "the-scream",
+      "wiki": "The_Scream",
+      "title": "El grito",
+      "orig": "Skrik",
+      "artist": "Edvard Munch",
+      "year": "1893",
+      "country": "Noruega",
+      "medium": "Temple y pastel sobre cartón",
+      "size": "91 × 73,5 cm",
+      "place": "Nasjonalmuseet, Oslo",
+      "note": "No grita la figura: escucha «un grito infinito que atraviesa la naturaleza», según el diario de Munch. El cielo rojo pudo ser el Krakatoa.",
+      "fav": true
+    },
+    {
+      "id": "las-meninas",
+      "wiki": "Las_Meninas",
+      "title": "Las meninas",
+      "orig": "La familia de Felipe IV",
+      "artist": "Diego Velázquez",
+      "year": "1656",
+      "country": "España",
+      "medium": "Óleo sobre lienzo",
+      "size": "318 × 276 cm",
+      "place": "Museo del Prado, Madrid",
+      "note": "Velázquez se autorretrata pintando; los reyes se reflejan en el espejo del fondo. ¿Quién mira a quién? El cuadro invierte al espectador.",
+      "fav": true
+    },
+    {
+      "id": "the-kiss-klimt",
+      "wiki": "The_Kiss_(Klimt)",
+      "title": "El beso",
+      "orig": "Der Kuss",
+      "artist": "Gustav Klimt",
+      "year": "1907–1908",
+      "country": "Austria",
+      "medium": "Óleo y pan de oro sobre lienzo",
+      "size": "180 × 180 cm",
+      "place": "Belvedere, Viena",
+      "note": "Cumbre del «período dorado» de Klimt: pan de oro real, patrones bizantinos y una pareja fundida en un solo manto ornamental.",
+      "fav": true
+    },
+    {
+      "id": "grande-jatte",
+      "wiki": "A_Sunday_Afternoon_on_the_Island_of_La_Grande_Jatte",
+      "title": "Tarde de domingo en la isla de la Grande Jatte",
+      "orig": "Un dimanche après-midi à l'Île de la Grande Jatte",
+      "artist": "Georges Seurat",
+      "year": "1884–1886",
+      "country": "Francia",
+      "medium": "Óleo sobre lienzo",
+      "size": "207,5 × 308,1 cm",
+      "place": "Art Institute of Chicago",
+      "note": "Puntillismo: millones de puntos de color puro que el ojo mezcla a distancia. Seurat tardó dos años en construir esta escena.",
+      "fav": true
+    },
+    {
+      "id": "garden-delights",
+      "wiki": "The_Garden_of_Earthly_Delights",
+      "title": "El jardín de las delicias",
+      "orig": "El jardín de las delicias",
+      "artist": "El Bosco (Hieronymus Bosch)",
+      "year": "c. 1490–1500",
+      "country": "Países Bajos",
+      "medium": "Óleo sobre tabla (tríptico)",
+      "size": "205,5 × 384,9 cm",
+      "place": "Museo del Prado, Madrid",
+      "note": "Del Edén al infierno musical: un delirio simbólico del Bosco lleno de criaturas imposibles que aún nadie ha descifrado del todo.",
+      "fav": true
+    },
+    {
+      "id": "impression-sunrise",
+      "wiki": "Impression,_Sunrise",
+      "title": "Impresión, sol naciente",
+      "orig": "Impression, soleil levant",
+      "artist": "Claude Monet",
+      "year": "1872",
+      "country": "Francia",
+      "medium": "Óleo sobre lienzo",
+      "size": "48 × 63 cm",
+      "place": "Museo Marmottan Monet, París",
+      "note": "El cuadro que bautizó al Impresionismo: un crítico usó su título como burla y el nombre quedó para siempre.",
+      "fav": true
+    },
+    {
+      "id": "third-of-may",
+      "wiki": "The_Third_of_May_1808",
+      "title": "El tres de mayo de 1808",
+      "orig": "El tres de mayo de 1808 en Madrid",
+      "artist": "Francisco de Goya",
+      "year": "1814",
+      "country": "España",
+      "medium": "Óleo sobre lienzo",
+      "size": "268 × 347 cm",
+      "place": "Museo del Prado, Madrid",
+      "note": "El fusilamiento de patriotas madrileños. La camisa blanca y los brazos abiertos del condenado inauguran la pintura moderna de guerra.",
+      "fav": true
+    },
+    {
+      "id": "liberty-leading",
+      "wiki": "Liberty_Leading_the_People",
+      "title": "La libertad guiando al pueblo",
+      "orig": "La Liberté guidant le peuple",
+      "artist": "Eugène Delacroix",
+      "year": "1830",
+      "country": "Francia",
+      "medium": "Óleo sobre lienzo",
+      "size": "260 × 325 cm",
+      "place": "Museo del Louvre, París",
+      "note": "La Libertad, mitad diosa mitad mujer del pueblo, avanza con la bandera tricolor sobre las barricadas de la Revolución de Julio.",
+      "fav": true
+    },
+    {
+      "id": "cafe-terrace",
+      "wiki": "Café_Terrace_at_Night",
+      "title": "Terraza de café por la noche",
+      "orig": "Caféterras bij nacht",
+      "artist": "Vincent van Gogh",
+      "year": "1888",
+      "country": "Países Bajos",
+      "medium": "Óleo sobre lienzo",
+      "size": "80,7 × 65,3 cm",
+      "place": "Museo Kröller-Müller, Otterlo",
+      "note": "El primer cielo estrellado de Van Gogh, pintado al aire libre en Arlés. Sin negro: la noche es azul, violeta y amarillo gas."
+    },
+    {
+      "id": "sunflowers",
+      "wiki": "Sunflowers_(Van_Gogh_series)",
+      "file": "Vincent_Willem_van_Gogh_127.jpg",
+      "title": "Los girasoles",
+      "orig": "Zonnebloemen",
+      "artist": "Vincent van Gogh",
+      "year": "1888",
+      "country": "Países Bajos",
+      "medium": "Óleo sobre lienzo",
+      "size": "92,1 × 73 cm",
+      "place": "National Gallery, Londres",
+      "note": "Amarillo sobre amarillo para recibir a Gauguin en Arlés. Van Gogh usó el nuevo pigmento amarillo de cromo, hoy oscurecido por el tiempo.",
+      "fav": true
+    },
+    {
+      "id": "ophelia",
+      "wiki": "Ophelia_(painting)",
+      "title": "Ofelia",
+      "orig": "Ophelia",
+      "artist": "John Everett Millais",
+      "year": "1851–1852",
+      "country": "Reino Unido",
+      "medium": "Óleo sobre lienzo",
+      "size": "76,2 × 111,8 cm",
+      "place": "Tate Britain, Londres",
+      "note": "La Ofelia de Hamlet cantando mientras se ahoga. Millais pintó cada flor con precisión botánica; la modelo posó en una bañera y enfermó."
+    },
+    {
+      "id": "fighting-temeraire",
+      "wiki": "The_Fighting_Temeraire",
+      "title": "El Temerario remolcado a dique seco",
+      "orig": "The Fighting Temeraire",
+      "artist": "J. M. W. Turner",
+      "year": "1839",
+      "country": "Reino Unido",
+      "medium": "Óleo sobre lienzo",
+      "size": "90,7 × 121,6 cm",
+      "place": "National Gallery, Londres",
+      "note": "Un viejo velero de Trafalgar, fantasmal y pálido, arrastrado a desguace por un remolcador de vapor. El fin de la era de la vela."
+    },
+    {
+      "id": "primavera",
+      "wiki": "Primavera_(Botticelli)",
+      "title": "La primavera",
+      "orig": "Primavera",
+      "artist": "Sandro Botticelli",
+      "year": "c. 1480",
+      "country": "Italia",
+      "medium": "Temple sobre tabla",
+      "size": "202 × 314 cm",
+      "place": "Galería Uffizi, Florencia",
+      "note": "Alegoría mitológica con más de 500 especies vegetales identificadas. Se lee de derecha a izquierda: del viento Céfiro a Mercurio."
+    },
+    {
+      "id": "milkmaid",
+      "wiki": "The_Milkmaid_(Vermeer)",
+      "title": "La lechera",
+      "orig": "De melkmeid",
+      "artist": "Johannes Vermeer",
+      "year": "c. 1658",
+      "country": "Países Bajos",
+      "medium": "Óleo sobre lienzo",
+      "size": "45,5 × 41 cm",
+      "place": "Rijksmuseum, Ámsterdam",
+      "note": "Dignidad monumental en un gesto cotidiano. Los «puntos» de luz sobre el pan podrían delatar el uso de una cámara oscura."
+    },
+    {
+      "id": "bedroom-arles",
+      "wiki": "Bedroom_in_Arles",
+      "title": "El dormitorio en Arlés",
+      "orig": "De slaapkamer",
+      "artist": "Vincent van Gogh",
+      "year": "1888",
+      "country": "Países Bajos",
+      "medium": "Óleo sobre lienzo",
+      "size": "72 × 90 cm",
+      "place": "Van Gogh Museum, Ámsterdam",
+      "note": "«El color debe hacerlo todo… sugerir el reposo», escribió a Theo. Las paredes hoy azules eran originalmente de un violeta desvanecido."
+    },
+    {
+      "id": "saturn-goya",
+      "wiki": "Saturn_Devouring_His_Son",
+      "title": "Saturno devorando a un hijo",
+      "orig": "Saturno devorando a su hijo",
+      "artist": "Francisco de Goya",
+      "year": "1819–1823",
+      "country": "España",
+      "medium": "Pintura negra trasladada a lienzo",
+      "size": "143,5 × 81,4 cm",
+      "place": "Museo del Prado, Madrid",
+      "note": "Una de las «pinturas negras» que Goya pintó directamente en los muros de su casa, sin encargo ni intención de exhibirlas."
+    },
+    {
+      "id": "el-caballero",
+      "wiki": "The_Nobleman_with_his_Hand_on_his_Chest",
+      "title": "El caballero de la mano en el pecho",
+      "orig": "El caballero de la mano en el pecho",
+      "artist": "El Greco",
+      "year": "c. 1580",
+      "country": "España",
+      "medium": "Óleo sobre lienzo",
+      "size": "81,8 × 65,8 cm",
+      "place": "Museo del Prado, Madrid",
+      "note": "El gesto de juramento de un hidalgo toledano. La mano y la empuñadura de la espada son el foco de una composición austera y espiritual."
+    },
+    {
+      "id": "arnolfini",
+      "wiki": "The_Arnolfini_Portrait",
+      "fav": true,
+      "note": "Hito del realismo flamenco y del óleo: el espejo convexo del fondo refleja toda la habitación, y Van Eyck firmó dentro del cuadro «Johannes de eyck fuit hic» (estuvo aquí)."
+    },
+    {
+      "id": "last-supper",
+      "wiki": "The_Last_Supper_(Leonardo)",
+      "fav": true,
+      "note": "Leonardo captó el instante exacto en que Jesús dice «uno de vosotros me traicionará» y la conmoción recorre a los apóstoles. Su técnica experimental empezó a degradarse casi de inmediato."
+    },
+    {
+      "id": "creation-adam",
+      "wiki": "The_Creation_of_Adam",
+      "fav": true,
+      "note": "El casi-roce de los dedos de Dios y Adán es de las imágenes más reproducidas de la historia; la figura de Dios se inscribe en una forma que recuerda a un cerebro humano."
+    },
+    {
+      "id": "school-athens",
+      "wiki": "The_School_of_Athens",
+      "fav": true,
+      "note": "Rafael reúne a los grandes filósofos griegos: Platón señala al cielo y Aristóteles a la tierra. Retrató a Leonardo, Miguel Ángel y a sí mismo. Cumbre del Alto Renacimiento."
+    },
+    {
+      "id": "venus-urbino",
+      "wiki": "Venus_of_Urbino",
+      "note": "El desnudo que fijó el modelo para siglos; su mirada franca y sensual escandalizó e inspiró directamente la «Olympia» de Manet."
+    },
+    {
+      "id": "bacchus-ariadne",
+      "wiki": "Bacchus_and_Ariadne",
+      "note": "Estallido del color veneciano: Tiziano congela a Baco saltando de su carro para rescatar a Ariadna, bajo un cielo de ultramar carísimo."
+    },
+    {
+      "id": "ambassadors",
+      "wiki": "The_Ambassadors_(Holbein)",
+      "note": "A los pies hay un cráneo deformado (anamorfosis) que solo se ve de lado: un memento mori escondido entre los símbolos del poder y el saber terrenales."
+    },
+    {
+      "id": "anatomy-tulp",
+      "wiki": "The_Anatomy_Lesson_of_Dr._Nicolaes_Tulp",
+      "note": "Con 26 años, Rembrandt revolucionó el retrato de grupo dándole tensión y foco dramáticos alrededor de una disección real de un criminal ejecutado."
+    },
+    {
+      "id": "judith-caravaggio",
+      "wiki": "Judith_Beheading_Holofernes_(Caravaggio)",
+      "note": "Caravaggio pinta el instante brutal y realista de la decapitación con luz teatral y sangre; nada idealizado, todo crudo. Puro tenebrismo."
+    },
+    {
+      "id": "calling-matthew",
+      "wiki": "The_Calling_of_Saint_Matthew",
+      "note": "Un rayo de luz señala a Mateo en una taberna oscura, como el dedo de Dios en la Sixtina: Caravaggio hizo del claroscuro un relato espiritual."
+    },
+    {
+      "id": "supper-emmaus",
+      "wiki": "Supper_at_Emmaus_(Caravaggio,_London)",
+      "note": "El momento en que los discípulos reconocen a Cristo resucitado estalla hacia el espectador; Caravaggio usó gente común para acercar lo sagrado."
+    },
+    {
+      "id": "astronomer",
+      "wiki": "The_Astronomer_(Vermeer)",
+      "note": "Vermeer captó la luz y la concentración del saber en plena Edad de Oro holandesa; probable pareja de «El geógrafo»."
+    },
+    {
+      "id": "view-delft",
+      "wiki": "View_of_Delft",
+      "note": "Una de las vistas urbanas más admiradas de la historia; Proust la llamó «el cuadro más bello del mundo» por su luz sobre la ciudad tras la lluvia."
+    },
+    {
+      "id": "rokeby-venus",
+      "wiki": "Rokeby_Venus",
+      "note": "El único desnudo que sobrevive de Velázquez; una sufragista lo acuchilló en 1914 como protesta, y su restauración es parte de su leyenda."
+    },
+    {
+      "id": "surrender-breda",
+      "wiki": "The_Surrender_of_Breda",
+      "note": "Velázquez sustituye el triunfalismo por la magnanimidad: el vencedor consuela al vencido. «Las lanzas» es una lección de dignidad en la pintura de guerra."
+    },
+    {
+      "id": "hunters-snow",
+      "wiki": "The_Hunters_in_the_Snow",
+      "note": "Una de las primeras grandes pinturas de paisaje invernal; su mirada elevada y su frío gris-verde crearon la imagen que asociamos al invierno."
+    },
+    {
+      "id": "tower-babel",
+      "wiki": "The_Tower_of_Babel_(Bruegel)",
+      "note": "Bruegel convierte el mito bíblico en crítica a la soberbia: una torre imposible, con errores de ingeniería visibles, condenada a no terminarse."
+    },
+    {
+      "id": "netherlandish-proverbs",
+      "wiki": "Netherlandish_Proverbs",
+      "note": "Un catálogo enciclopédico: más de cien refranes flamencos representados literalmente en una sola aldea caótica."
+    },
+    {
+      "id": "fall-icarus",
+      "wiki": "Landscape_with_the_Fall_of_Icarus",
+      "note": "Mientras Ícaro se ahoga (solo se ven sus piernas), el mundo sigue arando y navegando indiferente: una meditación sobre la indiferencia ante la tragedia ajena."
+    },
+    {
+      "id": "ghent-altarpiece",
+      "wiki": "Ghent_Altarpiece",
+      "note": "Pionero del óleo y de un realismo minucioso deslumbrante; es la obra de arte más robada de la historia (una tabla sigue desaparecida desde 1934)."
+    },
+    {
+      "id": "raft-medusa",
+      "wiki": "The_Raft_of_the_Medusa",
+      "note": "Basado en un naufragio real y su escándalo político; Géricault estudió cadáveres para lograr un realismo brutal. Manifiesto del Romanticismo."
+    },
+    {
+      "id": "death-marat",
+      "wiki": "The_Death_of_Marat",
+      "note": "David convierte el asesinato de un líder revolucionario en una «Pietà» laica: sereno, martirizado, atemporal. Icono de la Revolución francesa."
+    },
+    {
+      "id": "oath-horatii",
+      "wiki": "Oath_of_the_Horatii",
+      "note": "El juramento de morir por la patria, en línea rígida y luz fría: el manifiesto del Neoclasicismo y presagio del fervor revolucionario."
+    },
+    {
+      "id": "napoleon-alps",
+      "wiki": "Napoleon_Crossing_the_Alps",
+      "note": "Propaganda perfecta: Napoleón sereno sobre un caballo encabritado (cruzó en realidad en mula). David forjó la imagen heroica del líder."
+    },
+    {
+      "id": "grande-odalisque",
+      "wiki": "Grande_Odalisque",
+      "note": "Ingres alargó la espalda con vértebras de más, sacrificando la anatomía por la línea sensual; la crítica lo atacó y hoy es su sello."
+    },
+    {
+      "id": "sea-of-ice",
+      "wiki": "The_Sea_of_Ice",
+      "note": "Un naufragio aplastado por placas de hielo: la naturaleza sublime e indiferente que destruye al hombre. Tan pesimista que no se vendió en vida de Friedrich."
+    },
+    {
+      "id": "nightmare",
+      "wiki": "The_Nightmare",
+      "note": "Un íncubo agazapado sobre una durmiente: una de las primeras imágenes del terror y del inconsciente, un siglo antes de Freud. Escandalizó y fascinó."
+    },
+    {
+      "id": "rain-steam-speed",
+      "wiki": "Rain,_Steam_and_Speed",
+      "note": "Turner disuelve un tren en lluvia y vapor: capta la velocidad de la era industrial con pura luz y atmósfera, anticipando el Impresionismo."
+    },
+    {
+      "id": "slave-ship",
+      "wiki": "The_Slave_Ship",
+      "note": "Turner pintó el horror real de esclavos arrojados al mar por el seguro; el color se vuelve denuncia moral. Ruskin lo tuvo por su obra suprema."
+    },
+    {
+      "id": "hay-wain",
+      "wiki": "The_Hay_Wain",
+      "note": "El paisaje inglés cotidiano elevado a gran arte; su pincelada suelta y su luz impactaron a los románticos franceses y abrieron paso al plein air."
+    },
+    {
+      "id": "gleaners",
+      "wiki": "The_Gleaners",
+      "note": "Millet dignificó a las campesinas más pobres, que espigan lo que queda tras la cosecha; su solemnidad casi religiosa inquietó a la burguesía."
+    },
+    {
+      "id": "angelus",
+      "wiki": "The_Angelus_(painting)",
+      "note": "Dos campesinos rezan al oír la campana del atardecer; Dalí, obsesionado, insistió en que ocultaba un ataúd, y los rayos X le dieron la razón."
+    },
+    {
+      "id": "stone-breakers",
+      "wiki": "The_Stone_Breakers",
+      "note": "Courbet mostró el trabajo agotador y anónimo sin idealizarlo: manifiesto del Realismo y de la conciencia social. El original se perdió en 1945."
+    },
+    {
+      "id": "burial-ornans",
+      "wiki": "A_Burial_at_Ornans",
+      "note": "Un entierro de pueblo pintado a escala de cuadro histórico (casi 7 m): elevar lo ordinario a lo monumental fue un escándalo y el acta del Realismo."
+    },
+    {
+      "id": "lady-shalott",
+      "wiki": "The_Lady_of_Shalott_(painting)",
+      "note": "La heroína del poema de Tennyson navega hacia su muerte por amor; cumbre del imaginario prerrafaelita, con detalle botánico y melancolía."
+    },
+    {
+      "id": "whistlers-mother",
+      "wiki": "Whistler's_Mother",
+      "note": "Un ejercicio de armonía en grises y negros convertido en icono universal de la maternidad; hoy una de las pinturas más parodiadas del mundo."
+    },
+    {
+      "id": "water-lilies",
+      "wiki": "Water_Lilies_(Monet_series)",
+      "fav": true,
+      "note": "Monet pintó su estanque de Giverny más de 250 veces hasta rozar la abstracción; sus grandes paneles envuelven al espectador y anticipan el siglo XX."
+    },
+    {
+      "id": "woman-parasol",
+      "wiki": "Woman_with_a_Parasol_–_Madame_Monet_and_Her_Son",
+      "note": "Monet capta un instante fugaz al aire libre —viento, luz, movimiento— con pinceladas sueltas. Impresionismo puro, pintado en pocas horas."
+    },
+    {
+      "id": "rouen-cathedral",
+      "wiki": "Rouen_Cathedral_(Monet_series)",
+      "note": "Monet pintó la misma fachada a distintas horas y climas: la serie prueba que su verdadero tema no era la catedral, sino la luz cambiante."
+    },
+    {
+      "id": "luncheon-boating",
+      "wiki": "Luncheon_of_the_Boating_Party",
+      "note": "Renoir reúne a sus amigos en una comida luminosa junto al Sena; retrato dichoso de la vida moderna parisina y cumbre del Impresionismo."
+    },
+    {
+      "id": "moulin-galette",
+      "wiki": "Bal_du_moulin_de_la_Galette",
+      "fav": true,
+      "note": "Un baile popular al aire libre bañado de luz moteada bajo los árboles; Renoir capturó como nadie la alegría dominical de Montmartre."
+    },
+    {
+      "id": "olympia",
+      "wiki": "Olympia_(Manet)",
+      "note": "Una prostituta que mira de frente al espectador escandalizó al París de 1865; Manet rompió con la Venus idealizada y abrió el arte moderno."
+    },
+    {
+      "id": "dejeuner-herbe",
+      "wiki": "Le_Déjeuner_sur_l'herbe",
+      "note": "Una mujer desnuda almuerza con hombres vestidos y nos mira sin pudor: el rechazo del jurado y el escándalo lo hicieron bandera de la vanguardia."
+    },
+    {
+      "id": "bar-folies",
+      "wiki": "A_Bar_at_the_Folies-Bergère",
+      "note": "El reflejo del espejo no cuadra con la escena: Manet juega con la mirada y la soledad de la camarera entre el bullicio. Su última obra maestra."
+    },
+    {
+      "id": "card-players",
+      "wiki": "The_Card_Players",
+      "note": "Cézanne convirtió a unos campesinos jugando a las cartas en geometría monumental y silenciosa; una versión batió el récord de cuadro más caro."
+    },
+    {
+      "id": "mont-sainte-victoire",
+      "wiki": "Mont_Sainte-Victoire",
+      "note": "Cézanne pintó esta montaña decenas de veces descomponiéndola en planos de color: el puente entre el Impresionismo y el Cubismo."
+    },
+    {
+      "id": "potato-eaters",
+      "wiki": "The_Potato_Eaters",
+      "note": "Van Gogh usó colores terrosos para mostrar la dureza honesta de campesinos que comen lo que sus manos cultivaron; su primera gran obra."
+    },
+    {
+      "id": "yellow-house",
+      "wiki": "The_Yellow_House",
+      "note": "La casa de Arlés donde Van Gogh soñó una comunidad de artistas y vivió con Gauguin, antes del célebre episodio de la oreja. Su utopía pintada."
+    },
+    {
+      "id": "wheatfield-crows",
+      "wiki": "Wheatfield_with_Crows",
+      "note": "Cielo tormentoso, cuervos y caminos que no llevan a ningún sitio; pintado poco antes de su muerte, se lee como uno de sus adioses más intensos."
+    },
+    {
+      "id": "irises",
+      "wiki": "Irises_(painting)",
+      "note": "Van Gogh los pintó en el jardín del sanatorio; cada lirio es distinto y vibrante, sin rastro de melancolía. Miró estampas japonesas para componerlo."
+    },
+    {
+      "id": "almond-blossoms",
+      "wiki": "Almond_Blossoms",
+      "note": "Ramas en flor sobre cielo azul, pintadas para celebrar el nacimiento de su sobrino: influencia japonesa y pura esperanza. De sus obras más queridas."
+    },
+    {
+      "id": "starry-night-rhone",
+      "wiki": "Starry_Night_Over_the_Rhône",
+      "note": "El primer cielo nocturno estrellado de Van Gogh, pintado al aire libre junto al Ródano, con las luces de gas reflejadas en el agua."
+    },
+    {
+      "id": "dr-gachet",
+      "wiki": "Portrait_of_Dr._Gachet",
+      "note": "El retrato melancólico del médico que cuidó a Van Gogh; fue el cuadro más caro del mundo en 1990 y luego desapareció de la vista pública."
+    },
+    {
+      "id": "vision-sermon",
+      "wiki": "Vision_after_the_Sermon",
+      "note": "Gauguin pinta una visión religiosa sobre un campo rojo antinatural: rompió con el Impresionismo hacia el color simbólico y el arte moderno."
+    },
+    {
+      "id": "bathers-asnieres",
+      "wiki": "Bathers_at_Asnières",
+      "note": "Obreros descansan a la orilla del Sena en una escena luminosa y monumental; aquí Seurat empezó a ensayar sus puntos de color puro."
+    },
+    {
+      "id": "adele-bloch-bauer",
+      "wiki": "Portrait_of_Adele_Bloch-Bauer_I",
+      "note": "La «Mona Lisa de Austria», cubierta de oro por Klimt; su restitución a los herederos tras el expolio nazi inspiró la película «La dama de oro»."
+    },
+    {
+      "id": "old-guitarist",
+      "wiki": "The_Old_Guitarist",
+      "note": "De la época azul de Picasso: un músico ciego y famélico, alargado y doblado por la miseria. La melancolía convertida en color y forma."
+    },
+    {
+      "id": "demoiselles",
+      "wiki": "Les_Demoiselles_d'Avignon",
+      "note": "El cuadro que hizo estallar el arte del siglo XX: rostros de máscara africana y cuerpos fracturados que abrieron el camino al Cubismo."
+    },
+    {
+      "id": "guernica",
+      "wiki": "Guernica_(Picasso)",
+      "fav": true,
+      "note": "El grito antibélico más célebre de la historia: en blanco y negro, Picasso denunció el bombardeo de Guernica. Símbolo universal contra la guerra."
+    },
+    {
+      "id": "weeping-woman",
+      "wiki": "Weeping_Woman",
+      "note": "El dolor de la guerra hecho rostro fragmentado y lágrimas de cristal; una coda personal a «Guernica», con Dora Maar como modelo."
+    },
+    {
+      "id": "persistence-memory",
+      "wiki": "The_Persistence_of_Memory",
+      "note": "Los relojes blandos que se derriten volvieron célebre al Surrealismo; Dalí decía habérselos inspirado un camembert fundiéndose al sol."
+    },
+    {
+      "id": "son-of-man",
+      "wiki": "The_Son_of_Man",
+      "note": "El hombre de bombín con el rostro tapado por una manzana verde: Magritte hizo de lo oculto su gran tema, «vemos y no vemos a la vez»."
+    },
+    {
+      "id": "treachery-images",
+      "wiki": "The_Treachery_of_Images",
+      "note": "«Ceci n'est pas une pipe»: Magritte recuerda que una imagen no es la cosa que representa. Una de las bromas filosóficas más influyentes del arte."
+    },
+    {
+      "id": "christ-st-john",
+      "wiki": "Christ_of_Saint_John_of_the_Cross",
+      "note": "Un Cristo visto desde arriba, sin sangre ni clavos, flotando en la oscuridad: Dalí buscó una crucifixión mística y serena. Icono del siglo XX."
+    },
+    {
+      "id": "composition-vii",
+      "wiki": "Composition_VII",
+      "note": "La cima de la abstracción de Kandinsky: un torbellino de color y línea sin objeto reconocible, concebido como si fuera música."
+    },
+    {
+      "id": "broadway-boogie",
+      "wiki": "Broadway_Boogie_Woogie",
+      "note": "Mondrian tradujo el ritmo del jazz y las calles de Nueva York a una cuadrícula vibrante de amarillos: geometría pura convertida en energía."
+    },
+    {
+      "id": "dance-matisse",
+      "wiki": "Dance_(Matisse)",
+      "fav": true,
+      "note": "Cinco figuras rojas girando en un círculo primitivo sobre azul y verde: Matisse redujo la alegría y el movimiento a lo esencial."
+    },
+    {
+      "id": "woman-hat",
+      "wiki": "Woman_with_a_Hat",
+      "note": "El retrato de colores «salvajes» de su esposa desató el escándalo fauvista de 1905: el color liberado de la realidad, como pura emoción."
+    },
+    {
+      "id": "two-fridas",
+      "wiki": "The_Two_Fridas",
+      "note": "Dos autorretratos de Frida unidos por una vena y un corazón expuesto, pintados tras su divorcio de Diego Rivera: el dolor hecho símbolo."
+    },
+    {
+      "id": "broken-column",
+      "wiki": "The_Broken_Column",
+      "note": "Frida se pinta partida por una columna jónica rota y clavada de clavos, tras el accidente que marcó su vida: el sufrimiento convertido en arte."
+    },
+    {
+      "id": "kahlo-thorn-necklace",
+      "wiki": "Self-Portrait_with_Thorn_Necklace_and_Hummingbird",
+      "note": "Frida con un collar de espinas que la hiere, un colibrí muerto y su mono: un autorretrato cargado de símbolos de dolor y resistencia."
+    },
+    {
+      "id": "american-gothic",
+      "wiki": "American_Gothic",
+      "fav": true,
+      "note": "El granjero y su hija ante una casa de ventana gótica se volvieron el símbolo —y la parodia— de la América rural puritana."
+    },
+    {
+      "id": "christinas-world",
+      "wiki": "Christina's_World",
+      "note": "Una mujer arrastrándose hacia una granja lejana; inspirada en una vecina con parálisis, transmite anhelo y aislamiento con inquietante quietud."
+    },
+    {
+      "id": "red-fuji",
+      "wiki": "Fine_Wind,_Clear_Morning",
+      "note": "El monte Fuji teñido de rojo al amanecer de fin de verano; junto a «La gran ola», la estampa más célebre de Hokusai y del arte japonés."
+    },
+    {
+      "id": "virgin-rocks",
+      "wiki": "Virgin_of_the_Rocks",
+      "fav": true,
+      "note": "Leonardo situó a la Virgen y los niños en una gruta envuelta en su sfumato; hay dos versiones (Louvre y Londres) rodeadas de misterio y disputas."
+    }
+  ]
+}
