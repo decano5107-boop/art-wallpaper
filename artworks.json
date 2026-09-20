@@ -32,7 +32,7 @@
     {
       "id": "nighthawks",
       "fav": true,
-      "wiki": "Nighthawks",
+      "wiki": "Nighthawks_(Hopper)",
       "title": "Nighthawks (Halcones de la noche)",
       "orig": "Nighthawks",
       "artist": "Edward Hopper",
@@ -255,7 +255,7 @@
     },
     {
       "id": "ophelia",
-      "wiki": "Ophelia_(painting)",
+      "wiki": "Ophelia_(Millais)",
       "title": "Ofelia",
       "orig": "Ophelia",
       "artist": "John Everett Millais",
@@ -485,7 +485,7 @@
     },
     {
       "id": "rain-steam-speed",
-      "wiki": "Rain,_Steam_and_Speed",
+      "wiki": "Rain,_Steam_and_Speed_–_The_Great_Western_Railway",
       "note": "Turner disuelve un tren en lluvia y vapor: capta la velocidad de la era industrial con pura luz y atmósfera, anticipando el Impresionismo."
     },
     {
@@ -542,7 +542,8 @@
     {
       "id": "rouen-cathedral",
       "wiki": "Rouen_Cathedral_(Monet_series)",
-      "note": "Monet pintó la misma fachada a distintas horas y climas: la serie prueba que su verdadero tema no era la catedral, sino la luz cambiante."
+      "note": "Monet pintó la misma fachada a distintas horas y climas: la serie prueba que su verdadero tema no era la catedral, sino la luz cambiante.",
+      "skip": "Wikipedia sólo tiene 559x874 px del artículo de la serie"
     },
     {
       "id": "luncheon-boating",
@@ -577,7 +578,7 @@
     },
     {
       "id": "mont-sainte-victoire",
-      "wiki": "Mont_Sainte-Victoire",
+      "wiki": "Mont_Sainte-Victoire_(Cézanne)",
       "note": "Cézanne pintó esta montaña decenas de veces descomponiéndola en planos de color: el puente entre el Impresionismo y el Cubismo."
     },
     {
@@ -644,32 +645,32 @@
       "id": "guernica",
       "wiki": "Guernica_(Picasso)",
       "fav": true,
-      "note": "El grito antibélico más célebre de la historia: en blanco y negro, Picasso denunció el bombardeo de Guernica. Símbolo universal contra la guerra."
-    },
-    {
-      "id": "weeping-woman",
-      "wiki": "Weeping_Woman",
-      "note": "El dolor de la guerra hecho rostro fragmentado y lágrimas de cristal; una coda personal a «Guernica», con Dora Maar como modelo."
+      "note": "El grito antibélico más célebre de la historia: en blanco y negro, Picasso denunció el bombardeo de Guernica. Símbolo universal contra la guerra.",
+      "skip": "Wikipedia sólo tiene 464x211 px (obra con derechos)"
     },
     {
       "id": "persistence-memory",
       "wiki": "The_Persistence_of_Memory",
-      "note": "Los relojes blandos que se derriten volvieron célebre al Surrealismo; Dalí decía habérselos inspirado un camembert fundiéndose al sol."
+      "note": "Los relojes blandos que se derriten volvieron célebre al Surrealismo; Dalí decía habérselos inspirado un camembert fundiéndose al sol.",
+      "skip": "Wikipedia sólo tiene 371x268 px (obra con derechos)"
     },
     {
       "id": "son-of-man",
       "wiki": "The_Son_of_Man",
-      "note": "El hombre de bombín con el rostro tapado por una manzana verde: Magritte hizo de lo oculto su gran tema, «vemos y no vemos a la vez»."
+      "note": "El hombre de bombín con el rostro tapado por una manzana verde: Magritte hizo de lo oculto su gran tema, «vemos y no vemos a la vez».",
+      "skip": "Wikipedia sólo tiene 276x362 px (obra con derechos)"
     },
     {
       "id": "treachery-images",
       "wiki": "The_Treachery_of_Images",
-      "note": "«Ceci n'est pas une pipe»: Magritte recuerda que una imagen no es la cosa que representa. Una de las bromas filosóficas más influyentes del arte."
+      "note": "«Ceci n'est pas une pipe»: Magritte recuerda que una imagen no es la cosa que representa. Una de las bromas filosóficas más influyentes del arte.",
+      "skip": "Wikipedia sólo tiene 378x264 px (obra con derechos)"
     },
     {
       "id": "christ-st-john",
       "wiki": "Christ_of_Saint_John_of_the_Cross",
-      "note": "Un Cristo visto desde arriba, sin sangre ni clavos, flotando en la oscuridad: Dalí buscó una crucifixión mística y serena. Icono del siglo XX."
+      "note": "Un Cristo visto desde arriba, sin sangre ni clavos, flotando en la oscuridad: Dalí buscó una crucifixión mística y serena. Icono del siglo XX.",
+      "skip": "Wikipedia sólo tiene 237x421 px (obra con derechos)"
     },
     {
       "id": "composition-vii",
@@ -685,7 +686,8 @@
       "id": "dance-matisse",
       "wiki": "Dance_(Matisse)",
       "fav": true,
-      "note": "Cinco figuras rojas girando en un círculo primitivo sobre azul y verde: Matisse redujo la alegría y el movimiento a lo esencial."
+      "note": "Cinco figuras rojas girando en un círculo primitivo sobre azul y verde: Matisse redujo la alegría y el movimiento a lo esencial.",
+      "skip": "Wikipedia sólo tiene 874x575 px (obra con derechos)"
     },
     {
       "id": "woman-hat",
@@ -695,17 +697,20 @@
     {
       "id": "two-fridas",
       "wiki": "The_Two_Fridas",
-      "note": "Dos autorretratos de Frida unidos por una vena y un corazón expuesto, pintados tras su divorcio de Diego Rivera: el dolor hecho símbolo."
+      "note": "Dos autorretratos de Frida unidos por una vena y un corazón expuesto, pintados tras su divorcio de Diego Rivera: el dolor hecho símbolo.",
+      "skip": "Wikipedia sólo tiene 315x317 px (obra con derechos)"
     },
     {
       "id": "broken-column",
       "wiki": "The_Broken_Column",
-      "note": "Frida se pinta partida por una columna jónica rota y clavada de clavos, tras el accidente que marcó su vida: el sufrimiento convertido en arte."
+      "note": "Frida se pinta partida por una columna jónica rota y clavada de clavos, tras el accidente que marcó su vida: el sufrimiento convertido en arte.",
+      "skip": "Wikipedia sólo tiene 270x358 px (obra con derechos)"
     },
     {
       "id": "kahlo-thorn-necklace",
       "wiki": "Self-Portrait_with_Thorn_Necklace_and_Hummingbird",
-      "note": "Frida con un collar de espinas que la hiere, un colibrí muerto y su mono: un autorretrato cargado de símbolos de dolor y resistencia."
+      "note": "Frida con un collar de espinas que la hiere, un colibrí muerto y su mono: un autorretrato cargado de símbolos de dolor y resistencia.",
+      "skip": "Wikipedia sólo tiene 277x360 px (obra con derechos)"
     },
     {
       "id": "american-gothic",
@@ -716,7 +721,8 @@
     {
       "id": "christinas-world",
       "wiki": "Christina's_World",
-      "note": "Una mujer arrastrándose hacia una granja lejana; inspirada en una vecina con parálisis, transmite anhelo y aislamiento con inquietante quietud."
+      "note": "Una mujer arrastrándose hacia una granja lejana; inspirada en una vecina con parálisis, transmite anhelo y aislamiento con inquietante quietud.",
+      "skip": "Wikipedia sólo tiene 395x265 px (obra con derechos)"
     },
     {
       "id": "red-fuji",
@@ -728,6 +734,486 @@
       "wiki": "Virgin_of_the_Rocks",
       "fav": true,
       "note": "Leonardo situó a la Virgen y los niños en una gruta envuelta en su sfumato; hay dos versiones (Louvre y Londres) rodeadas de misterio y disputas."
+    },
+    {
+      "id": "lacemaker",
+      "wiki": "The_Lacemaker_(Vermeer)",
+      "note": "Vermeer pinta como enfoca una lente: los hilos del primer plano están deliberadamente borrosos y sólo las manos quedan nítidas. Dalí lo consideraba el cuadro más perfecto jamás pintado."
+    },
+    {
+      "id": "little-street",
+      "wiki": "The_Little_Street",
+      "note": "Una de las dos únicas vistas urbanas de Vermeer. En 2015 un investigador identificó la casa exacta rastreando un registro de impuestos sobre los canales de Delft."
+    },
+    {
+      "id": "goldfinch",
+      "wiki": "The_Goldfinch_(painting)",
+      "note": "Fabritius murió meses después en la explosión del polvorín de Delft, que se llevó casi toda su obra. Este pájaro encadenado sobrevivió y siglos después dio título a una novela Pulitzer."
+    },
+    {
+      "id": "jewish-bride",
+      "wiki": "The_Jewish_Bride",
+      "note": "Van Gogh dijo que daría diez años de su vida por poder sentarse quince días frente a él. El oro de la manga no está pintado: está puesto con espátula, casi en relieve."
+    },
+    {
+      "id": "prodigal-son",
+      "wiki": "The_Return_of_the_Prodigal_Son_(Rembrandt)",
+      "note": "El último gran lienzo de Rembrandt, pintado casi ciego de deudas. Las dos manos del padre son distintas —una masculina y otra femenina— y nadie sabe si fue intencionado."
+    },
+    {
+      "id": "storm-galilee",
+      "wiki": "The_Storm_on_the_Sea_of_Galilee",
+      "note": "El único marino que pintó Rembrandt y la obra robada más valiosa del mundo: desapareció en el asalto al museo Gardner de Boston en 1990 y su marco sigue colgado vacío."
+    },
+    {
+      "id": "laughing-cavalier",
+      "wiki": "The_Laughing_Cavalier",
+      "note": "Hals pinta con una soltura que se adelanta dos siglos al impresionismo. Ni ríe ni es caballero: el título se lo inventó la prensa victoriana y se quedó."
+    },
+    {
+      "id": "avenue-middelharnis",
+      "wiki": "The_Avenue_at_Middelharnis",
+      "note": "La perspectiva más audaz del siglo XVII holandés: una hilera de álamos desnudos que empuja la mirada al horizonte. Inspiró a Van Gogh y a Hobbema le costó el olvido en vida."
+    },
+    {
+      "id": "sistine-madonna",
+      "wiki": "Sistine_Madonna",
+      "note": "Rafael en estado puro, pero lo que todo el mundo reconoce son los dos angelitos aburridos del borde inferior, recortados y reproducidos hasta el infinito en tazas y postales."
+    },
+    {
+      "id": "david-goliath-caravaggio",
+      "wiki": "David_with_the_Head_of_Goliath_(Caravaggio,_Rome)",
+      "note": "Caravaggio, huido y condenado a muerte por homicidio, se autorretrata como la cabeza cortada. Se lo envió al cardenal que podía indultarlo: era una petición de perdón pintada."
+    },
+    {
+      "id": "triumph-death",
+      "wiki": "The_Triumph_of_Death",
+      "note": "Un ejército de esqueletos arrasando un paisaje: peste, guerra y hambre en un solo panorama. Bruegel pintaba lo que sus vecinos flamencos estaban viviendo de verdad."
+    },
+    {
+      "id": "peasant-wedding",
+      "wiki": "The_Peasant_Wedding",
+      "note": "Bruegel dio a la gente corriente el tamaño y la atención que se reservaban a los santos. Los invitados comen, beben y se aburren; la novia sonríe sin hacer nada."
+    },
+    {
+      "id": "burial-orgaz",
+      "wiki": "The_Burial_of_the_Count_of_Orgaz",
+      "note": "El Greco parte el cuadro en dos mundos: abajo los nobles de Toledo con retratos exactos, arriba un cielo de figuras estiradas como llamas. Sigue en la iglesia para la que se pintó."
+    },
+    {
+      "id": "view-toledo",
+      "wiki": "View_of_Toledo",
+      "note": "El primer paisaje puro de la pintura española y una tormenta que nunca existió: El Greco movió edificios de sitio para que la ciudad resultara más dramática."
+    },
+    {
+      "id": "clubfoot",
+      "wiki": "The_Clubfoot",
+      "note": "Ribera pone a un niño mendigo con la dignidad de un retrato de corte, a tamaño heroico y contra el cielo. El papel que sostiene es la licencia legal para pedir limosna."
+    },
+    {
+      "id": "naked-maja",
+      "wiki": "La_maja_desnuda",
+      "note": "Probablemente el primer desnudo occidental sin excusa mitológica y sin vello disimulado. Le costó a Goya una citación de la Inquisición para explicar quién lo había encargado."
+    },
+    {
+      "id": "dog-goya",
+      "wiki": "The_Dog_(Goya)",
+      "note": "De las Pinturas Negras que Goya pintó en las paredes de su propia casa, sin encargo ni público. Un perro asomando sobre un vacío inmenso: se lee como el primer cuadro moderno de la angustia."
+    },
+    {
+      "id": "charles-iv-family",
+      "wiki": "Charles_IV_of_Spain_and_His_Family",
+      "note": "Goya retrata a la familia real con una honestidad casi insolente —se ha dicho que parecen «el panadero y su mujer después de la lotería»— y se autorretrata en la sombra, como hizo Velázquez."
+    },
+    {
+      "id": "lamentation-giotto",
+      "wiki": "Lamentation_(The_Mourning_of_Christ)",
+      "note": "Giotto rompe mil años de figuras planas: aquí la gente tiene peso, se dobla de dolor y hasta los ángeles gritan. De esta capilla de Padua arranca la pintura occidental moderna."
+    },
+    {
+      "id": "tribute-money",
+      "wiki": "The_Tribute_Money_(Masaccio)",
+      "note": "Masaccio aplica por primera vez la perspectiva matemática y una única fuente de luz a una escena entera. Todos los pintores del Renacimiento florentino vinieron a copiarlo, Miguel Ángel incluido."
+    },
+    {
+      "id": "flagellation-piero",
+      "wiki": "The_Flagellation_of_Christ_(Piero_della_Francesca)",
+      "note": "Llamado «el cuadro pequeño más enigmático del mundo»: la tortura ocurre al fondo, a escala perfecta, mientras tres desconocidos charlan en primer plano y nadie ha sabido explicar quiénes son."
+    },
+    {
+      "id": "battle-san-romano",
+      "wiki": "The_Battle_of_San_Romano",
+      "note": "Uccello estaba tan obsesionado con la perspectiva que colocó las lanzas rotas en el suelo como líneas de fuga. Las tres tablas acabaron repartidas entre Londres, París y Florencia."
+    },
+    {
+      "id": "lamentation-mantegna",
+      "wiki": "Lamentation_of_Christ_(Mantegna)",
+      "note": "El escorzo más atrevido del Renacimiento: Cristo visto desde los pies, de modo que el espectador queda a la altura de la losa. Mantegna lo guardó sin vender hasta su muerte."
+    },
+    {
+      "id": "tempest",
+      "wiki": "The_Tempest_(Giorgione)",
+      "note": "Cinco siglos de intentos y nadie sabe qué representa: un soldado, una mujer amamantando y un rayo. Es el primer cuadro en el que el paisaje y la atmósfera son el tema."
+    },
+    {
+      "id": "transfiguration-raphael",
+      "wiki": "Transfiguration_(Raphael)",
+      "note": "La última obra de Rafael, sin terminar cuando murió a los 37. Se colocó junto a su cuerpo en el velatorio y marcó la transición del clasicismo al drama barroco."
+    },
+    {
+      "id": "bacchus-caravaggio",
+      "wiki": "Bacchus_(Caravaggio)",
+      "note": "Un dios del vino con las uñas sucias y cara de resaca. En la jarra de cristal se descubrió, con rayos X, el reflejo del propio Caravaggio pintando."
+    },
+    {
+      "id": "medusa-caravaggio",
+      "wiki": "Medusa_(Caravaggio)",
+      "note": "Pintada sobre un escudo convexo para que la cabeza cortada parezca salirse. Caravaggio le puso su propia cara: el único modo de mirar a Medusa sin morir era ser él."
+    },
+    {
+      "id": "last-judgment",
+      "wiki": "The_Last_Judgment_(Michelangelo)",
+      "note": "Tan escandaloso que tras el Concilio de Trento contrataron a un pintor para taparle los desnudos, apodado «el calzonero». Miguel Ángel se retrató en la piel desollada de San Bartolomé."
+    },
+    {
+      "id": "doni-tondo",
+      "wiki": "Doni_Tondo",
+      "note": "La única pintura de caballete terminada de Miguel Ángel que se conserva. Los colores ácidos que parecían un error resultaron ser los originales cuando se limpió la Sixtina."
+    },
+    {
+      "id": "wedding-cana",
+      "wiki": "The_Wedding_at_Cana_(Veronese)",
+      "note": "El lienzo más grande del Louvre: 130 invitados en una boda bíblica vestida como una fiesta veneciana. Napoleón se lo llevó cortándolo en dos para que cupiera."
+    },
+    {
+      "id": "vertumnus",
+      "wiki": "Vertumnus_(Arcimboldo)",
+      "note": "El emperador Rodolfo II retratado como un montón de frutas y verduras, y encantado con el resultado. Tres siglos antes del surrealismo, que lo reclamó como abuelo."
+    },
+    {
+      "id": "stonemasons-yard",
+      "wiki": "The_Stonemason's_Yard",
+      "note": "El mejor Canaletto no es una postal de gala sino un patio de obra con ropa tendida: Venecia sin maquillar, pintada para él mismo y no para el turista inglés."
+    },
+    {
+      "id": "melencolia",
+      "wiki": "Melencolia_I",
+      "note": "El grabado más analizado de la historia: un ángel paralizado rodeado de instrumentos de medir, con un cuadrado mágico que incluye la fecha, 1514. Nadie ha cerrado su interpretación."
+    },
+    {
+      "id": "durer-self",
+      "wiki": "Self-Portrait_(Dürer,_Munich)",
+      "note": "Dürer se pinta de frente y con la mano alzada, una pose reservada a Cristo. Fue una declaración inédita: el artista como creador, no como artesano."
+    },
+    {
+      "id": "young-hare",
+      "wiki": "Young_Hare",
+      "note": "Una acuarela de 1502 con cada pelo pintado uno a uno, y en el ojo el reflejo de una ventana con parteluz. Es el estudio de naturaleza más copiado de Europa."
+    },
+    {
+      "id": "isenheim",
+      "wiki": "Isenheim_Altarpiece",
+      "note": "Se pintó para un hospital de enfermos de ergotismo: el Cristo tiene las mismas llagas verdosas que los pacientes veían en su piel. Se abría por paneles según el calendario litúrgico."
+    },
+    {
+      "id": "haywain-bosch",
+      "wiki": "The_Haywain_Triptych",
+      "note": "Un carro de heno del que todo el mundo intenta arrancar un puñado, camino del infierno. Felipe II lo compró y lo tuvo colgado en El Escorial como espejo moral."
+    },
+    {
+      "id": "charles-i-hunt",
+      "wiki": "Charles_I_at_the_Hunt",
+      "note": "Van Dyck inventa el retrato de poder moderno: el rey sin corona ni trono, apoyado con naturalidad, mirando al espectador desde arriba. Todo el retrato aristocrático inglés sale de aquí."
+    },
+    {
+      "id": "embarkation-cythera",
+      "wiki": "The_Embarkation_for_Cythera",
+      "note": "Nadie sabe si las parejas llegan a la isla del amor o se van de ella, y esa ambigüedad melancólica fue suficiente para que la Academia inventara un género nuevo para Watteau."
+    },
+    {
+      "id": "the-swing",
+      "wiki": "The_Swing_(Fragonard)",
+      "note": "El encargo pedía a un obispo empujando el columpio; Fragonard lo cambió por un marido despistado y un amante escondido mirando bajo las faldas. Es el Rococó entero en un cuadro."
+    },
+    {
+      "id": "absinthe",
+      "wiki": "L'Absinthe",
+      "note": "Cuando se expuso en Londres lo llamaron degradante y feo. Degas había pintado el aislamiento urbano sesenta años antes de que existiera la palabra para nombrarlo."
+    },
+    {
+      "id": "sleeping-gypsy",
+      "wiki": "The_Sleeping_Gypsy",
+      "note": "Un aduanero de París que nunca salió de Francia pintó el desierto más convincente del arte moderno. Picasso lo descubrió en una tienda de segunda mano y lo compró en el acto."
+    },
+    {
+      "id": "dream-rousseau",
+      "wiki": "The_Dream_(Rousseau_painting)",
+      "note": "Un sofá Luis Felipe en mitad de la selva, sin explicación. Rousseau, autodidacta y objeto de burlas, respondió que la mujer soñaba que estaba allí."
+    },
+    {
+      "id": "yellow-christ",
+      "wiki": "The_Yellow_Christ",
+      "note": "Gauguin pinta un crucificado amarillo en un campo bretón en otoño, con colores planos y contornos duros. De este cuadro nace el simbolismo pictórico y, con él, el camino a Matisse."
+    },
+    {
+      "id": "cradle-morisot",
+      "wiki": "The_Cradle_(painting)",
+      "note": "Berthe Morisot expuso en la primera muestra impresionista de 1874 el gesto que ningún pintor varón miraba: una madre agotada velando una cuna, con el velo pintado a brochazos transparentes."
+    },
+    {
+      "id": "child-bath",
+      "wiki": "The_Child's_Bath",
+      "note": "Cassatt aplica el encuadre alto y los planos de color de la estampa japonesa a una escena doméstica. La intimidad sin sentimentalismo fue su gran aportación al impresionismo."
+    },
+    {
+      "id": "boating-party-cassatt",
+      "wiki": "The_Boating_Party",
+      "note": "La espalda enorme y oscura del remero ocupa media tela, un encuadre osado que Cassatt aprendió de Hokusai. Es el cuadro suyo que acabó en un sello de correos estadounidense."
+    },
+    {
+      "id": "horse-fair",
+      "wiki": "The_Horse_Fair",
+      "note": "Rosa Bonheur pedía permiso oficial a la policía para vestir de hombre e ir a los mercados de ganado a dibujar. El resultado la hizo la pintora más famosa del siglo XIX."
+    },
+    {
+      "id": "paris-rainy-day",
+      "wiki": "Paris_Street;_Rainy_Day",
+      "note": "Caillebotte pinta el París nuevo de Haussmann con precisión fotográfica y una perspectiva vertiginosa. Ninguno de los paseantes se mira: la soledad moderna, en 1877."
+    },
+    {
+      "id": "floor-scrapers",
+      "wiki": "The_Floor_Scrapers",
+      "note": "Rechazado en el Salón por «vulgar»: nadie había pintado obreros urbanos desnudos de cintura para arriba trabajando. Caillebotte pagaba de su bolsillo las exposiciones impresionistas."
+    },
+    {
+      "id": "gare-saint-lazare",
+      "wiki": "Arrival_of_the_Normandy_Train,_Gare_Saint-Lazare",
+      "note": "Monet convenció al jefe de estación de retrasar los trenes y quemar más carbón para tener el vapor que quería. La estación de tren como catedral moderna."
+    },
+    {
+      "id": "circus-seurat",
+      "wiki": "The_Circus_(Seurat)",
+      "note": "El último cuadro de Seurat, inacabado a su muerte a los 31 años. Todo son curvas ascendentes porque creía haber descubierto que ciertas líneas producen alegría por sí solas."
+    },
+    {
+      "id": "beata-beatrix",
+      "wiki": "Beata_Beatrix",
+      "note": "Rossetti lo pintó tras el suicidio de su mujer, retratándola como la Beatriz de Dante en el instante de morir. Años después desenterró su tumba para recuperar unos poemas."
+    },
+    {
+      "id": "proserpine",
+      "wiki": "Proserpine_(Rossetti_painting)",
+      "note": "La mujer atrapada en el inframundo por comer seis granos de granada: Rossetti pintó siete versiones obsesivas del mismo rostro, el de la mujer de su mejor amigo."
+    },
+    {
+      "id": "hylas-nymphs",
+      "wiki": "Hylas_and_the_Nymphs_(painting)",
+      "note": "En 2018 una galería de Mánchester lo descolgó unos días para provocar un debate sobre cómo se mira el desnudo femenino victoriano. Volvió, con más público que nunca."
+    },
+    {
+      "id": "mr-mrs-andrews",
+      "wiki": "Mr_and_Mrs_Andrews",
+      "note": "Una pareja terrateniente sentada junto a su propiedad, que ocupa dos tercios del cuadro: el retrato es del campo tanto como de ellos. El regazo de ella quedó sin terminar."
+    },
+    {
+      "id": "ancient-of-days",
+      "wiki": "The_Ancient_of_Days",
+      "note": "Blake, poeta y grabador visionario, retrata al creador midiendo el mundo con un compás: para él, encerrar el universo en razón y medida era el verdadero pecado."
+    },
+    {
+      "id": "air-pump",
+      "wiki": "An_Experiment_on_a_Bird_in_the_Air_Pump",
+      "note": "Joseph Wright ilumina con una vela un experimento científico como si fuera una Última Cena. La Ilustración pintada en el instante exacto en que la ciencia da miedo."
+    },
+    {
+      "id": "snow-storm-turner",
+      "wiki": "Snow_Storm:_Steam-Boat_off_a_Harbour's_Mouth",
+      "note": "Turner aseguró haberse hecho atar al mástil durante cuatro horas para observar la tormenta. La crítica lo llamó «agua de jabón y cal»; hoy se ve como el umbral de la abstracción."
+    },
+    {
+      "id": "isle-dead",
+      "wiki": "Isle_of_the_Dead_(painting)",
+      "note": "Böcklin pintó cinco versiones de esta isla fúnebre y hubo una reproducción en medio Berlín de entreguerras. Rachmaninov le dedicó un poema sinfónico; Hitler compró un original."
+    },
+    {
+      "id": "abbey-oakwood",
+      "wiki": "The_Abbey_in_the_Oakwood",
+      "note": "Friedrich reduce el mundo a una ruina gótica, robles muertos y niebla. El rey de Prusia lo compró con dieciséis años, contra el criterio de toda su corte."
+    },
+    {
+      "id": "chalk-cliffs",
+      "wiki": "Chalk_Cliffs_on_Rügen",
+      "note": "Pintado tras su luna de miel: tres figuras al borde de un acantilado, cada una mirando algo distinto. Nadie mira al mar salvo el hombre tumbado que se asoma al abismo."
+    },
+    {
+      "id": "death-life-klimt",
+      "wiki": "Death_and_Life",
+      "note": "Klimt lo retocó durante años hasta cambiarle el fondo de dorado a gris. La Muerte mira a un racimo de cuerpos dormidos que ni siquiera la advierten."
+    },
+    {
+      "id": "death-maiden-schiele",
+      "wiki": "Death_and_the_Maiden_(Schiele)",
+      "note": "Schiele se pinta como la Muerte abrazando a la amante que acababa de dejar para casarse por conveniencia. Murió de gripe española tres años después, a los 28."
+    },
+    {
+      "id": "barge-haulers",
+      "wiki": "Barge_Haulers_on_the_Volga",
+      "note": "Once hombres tirando de una barcaza como animales de carga; entre ellos, un muchacho que levanta la cabeza. Repin lo pintó con 29 años y sacudió la conciencia de la Rusia zarista."
+    },
+    {
+      "id": "ivan-terrible",
+      "wiki": "Ivan_the_Terrible_and_His_Son_Ivan",
+      "note": "El zar sostiene al hijo que acaba de matar, con los ojos desorbitados. Fue prohibido por el censor y dos visitantes distintos lo han atacado a cuchilladas, en 1913 y en 2018."
+    },
+    {
+      "id": "reply-cossacks",
+      "wiki": "Reply_of_the_Zaporozhian_Cossacks",
+      "note": "Repin tardó once años en pintar una carcajada colectiva: unos cosacos redactando una carta de insultos al sultán otomano. Es un catálogo de formas de reírse."
+    },
+    {
+      "id": "ninth-wave",
+      "wiki": "The_Ninth_Wave",
+      "note": "Aivazovsky pintaba el mar de memoria, sin bocetos, con una técnica de veladuras que hace que el agua parezca iluminada por detrás. Náufragos al amanecer frente a la ola más temida."
+    },
+    {
+      "id": "morning-pine-forest",
+      "wiki": "Morning_in_a_Pine_Forest",
+      "note": "El paisaje más reproducido de Rusia: está en los envoltorios de un caramelo soviético que sigue vendiéndose. Shishkin pintó el bosque y un amigo le añadió los osos."
+    },
+    {
+      "id": "black-square",
+      "wiki": "Black_Square_(painting)",
+      "note": "Malevich lo colgó en la esquina alta de la sala, el lugar reservado al icono en las casas rusas. Punto cero del arte: bajo la pintura, los rayos X encontraron otro cuadro y una frase."
+    },
+    {
+      "id": "madonna-munch",
+      "wiki": "Madonna_(Edvard_Munch)",
+      "note": "Una virgen con los ojos cerrados y un halo rojo; en la versión litográfica, espermatozoides en el marco y un feto en la esquina. Escándalo garantizado en 1894 y hoy icono noruego."
+    },
+    {
+      "id": "lemminkainen-mother",
+      "wiki": "Lemminkäinen's_Mother",
+      "note": "Una madre recompone el cuerpo despedazado de su hijo a la orilla del río de los muertos. Gallen-Kallela convirtió el Kalevala en la identidad visual de una Finlandia que aún no era país."
+    },
+    {
+      "id": "midsummer-dance",
+      "wiki": "Midsummer_Dance",
+      "note": "Zorn pinta la noche blanca sueca: a medianoche todavía hay luz suficiente para bailar. El cuadro nacional de Suecia, pintado con una pincelada tan suelta que parece inacabada de cerca."
+    },
+    {
+      "id": "gross-clinic",
+      "wiki": "The_Gross_Clinic",
+      "note": "Eakins pintó una operación real con sangre en los dedos del cirujano y lo rechazaron de la exposición del centenario por repugnante. Acabó colgado en la sección médica, entre aparatos."
+    },
+    {
+      "id": "max-schmitt",
+      "wiki": "Max_Schmitt_in_a_Single_Scull",
+      "note": "Eakins se autorretrata remando al fondo, y construyó el cuadro con perspectiva de ingeniero: cada reflejo en el agua está calculado. El deporte entra en la pintura seria."
+    },
+    {
+      "id": "gulf-stream",
+      "wiki": "The_Gulf_Stream_(painting)",
+      "note": "Un hombre negro solo en una barca desarbolada, rodeado de tiburones y con una tromba de agua acercándose. Cuando le preguntaron por el final, Homer respondió con sarcasmo que lo rescatarían."
+    },
+    {
+      "id": "heart-andes",
+      "wiki": "The_Heart_of_the_Andes",
+      "note": "Church lo expuso solo, en una sala a oscuras con cortinas y plantas tropicales, y cobró entrada: veinte mil personas hicieron cola. Pintó los Andes tras seguir la ruta de Humboldt."
+    },
+    {
+      "id": "rocky-mountains-lander",
+      "wiki": "The_Rocky_Mountains,_Lander's_Peak",
+      "note": "Bierstadt vendió el Oeste a la costa Este: montañas más altas y luz más dorada de lo que eran. Se vendió por 25.000 dólares, cifra récord en la América de 1865."
+    },
+    {
+      "id": "madame-x",
+      "wiki": "Portrait_of_Madame_X",
+      "note": "El escándalo del Salón de 1884 fue un tirante caído, que Sargent tuvo que repintar en su sitio. La modelo se escondió, él se mudó a Londres, y hoy lo llamaba su mejor obra."
+    },
+    {
+      "id": "daughters-boit",
+      "wiki": "The_Daughters_of_Edward_Darley_Boit",
+      "note": "Cuatro hermanas dispersas en un salón demasiado grande, cada una más lejos de la luz. Henry James lo describió como una habitación feliz con algo inquietante dentro."
+    },
+    {
+      "id": "carnation-lily-rose",
+      "wiki": "Carnation,_Lily,_Lily,_Rose",
+      "note": "Sargent sólo pintaba unos minutos al día, en el crepúsculo exacto en que los farolillos y el cielo tienen la misma luz. Tardó dos veranos en terminarlo."
+    },
+    {
+      "id": "sudden-shower-atake",
+      "wiki": "Sudden_Shower_over_Shin-Ōhashi_bridge_and_Atake",
+      "note": "La lluvia como líneas negras sobre el puente: una convención gráfica que no existía en Occidente. Van Gogh la copió al óleo, línea por línea, para entender cómo funcionaba."
+    },
+    {
+      "id": "plum-park-kameido",
+      "wiki": "Plum_Park_in_Kameido",
+      "note": "Hiroshige pone un tronco de ciruelo pegado a la nariz del espectador y el jardín entero al fondo. Van Gogh también la copió; el encuadre cortado cambió la composición europea."
+    },
+    {
+      "id": "three-beauties",
+      "wiki": "Three_Beauties_of_the_Present_Day",
+      "note": "Utamaro retrata a tres celebridades reales de Edo —dos camareras y una geisha— con rasgos diferenciados, cuando el género las pintaba idénticas. El retrato de famosos, en 1793."
+    },
+    {
+      "id": "abaporu",
+      "wiki": "Abaporu",
+      "note": "El cuadro que arrancó el movimiento antropofágico brasileño: devorar la cultura europea y digerirla en algo propio. Es la pintura latinoamericana más cara jamás vendida."
+    },
+    {
+      "id": "nude-descending",
+      "wiki": "Nude_Descending_a_Staircase,_No._2",
+      "note": "Un crítico lo describió como «una explosión en una fábrica de tejas» y fue el escándalo del Armory Show de 1913, el cuadro que le presentó la vanguardia europea a Nueva York."
+    },
+    {
+      "id": "city-rises",
+      "wiki": "The_City_Rises",
+      "note": "Boccioni pinta un caballo convertido en pura energía arrastrando a los obreros que construyen Milán. El primer gran manifiesto futurista hecho pintura."
+    },
+    {
+      "id": "i-and-village",
+      "wiki": "I_and_the_Village",
+      "note": "Chagall superpone su aldea bielorrusa, una vaca, una ordeñadora y casas del revés como en un sueño. La nostalgia judía del shtetl entra así en el arte moderno."
+    },
+    {
+      "id": "red-room-matisse",
+      "wiki": "The_Dessert:_Harmony_in_Red",
+      "note": "Matisse lo tenía terminado en azul y lo repintó entero de rojo antes de entregarlo. Mantel y pared comparten el mismo estampado hasta que el espacio deja de existir."
+    },
+    {
+      "id": "judith-artemisia",
+      "wiki": "Judith_Slaying_Holofernes_(Artemisia_Gentileschi,_Florence)",
+      "note": "Artemisia pinta la decapitación con la fuerza física que de verdad haría falta, remangada y a pulso, pocos años después de ganar el juicio por violación contra su maestro."
+    },
+    {
+      "id": "arcadian-shepherds",
+      "wiki": "The_Arcadian_Shepherds",
+      "note": "Unos pastores descubren una tumba con la frase «también en la Arcadia estoy yo»: la muerte habla en primera persona incluso en el paraíso. Poussin convirtió la pintura en filosofía."
+    },
+    {
+      "id": "judith-klimt",
+      "wiki": "Judith_I",
+      "note": "El público vienés se negó a aceptar que fuera Judith y durante décadas la llamó Salomé: una heroína bíblica no podía tener esa cara de placer. Klimt no cambió el título."
+    },
+    {
+      "id": "sick-child",
+      "wiki": "The_Sick_Child_(Munch)",
+      "note": "Munch pintó seis versiones de la muerte de su hermana por tuberculosis, rascando y repintando la tela para que la superficie misma pareciera enferma. La crítica lo llamó un cuadro sin terminar."
+    },
+    {
+      "id": "dance-of-life",
+      "wiki": "The_Dance_of_Life_(Munch)",
+      "note": "La misma mujer aparece tres veces —de blanco, de rojo y de negro— como las tres edades del deseo. Munch consideraba este cuadro el centro de su «Friso de la vida»."
+    },
+    {
+      "id": "washington-delaware",
+      "wiki": "Washington_Crossing_the_Delaware_(1851_painting)",
+      "note": "La imagen fundacional de Estados Unidos la pintó un alemán en Düsseldorf con el Rin de modelo, banderas equivocadas y una postura en la que ningún bote aguantaría."
+    },
+    {
+      "id": "where-do-we-come-from",
+      "wiki": "Where Do We Come From? What Are We? Where Are We Going?",
+      "note": "Gauguin lo pintó en Tahití como testamento antes de intentar suicidarse. Se lee de derecha a izquierda, del recién nacido a la anciana, y él lo tuvo por su obra cumbre."
     }
   ]
 }

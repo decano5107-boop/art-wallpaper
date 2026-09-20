@@ -20,6 +20,7 @@ país (con bandera) · museo · ciudad · y una **nota de por qué la obra es c�
 ~/.art-wallpaper/venv/bin/python3 rotate.py --once      # cambiar de obra ahora
 ~/.art-wallpaper/venv/bin/python3 rotate.py --id guernica   # forzar una obra
 ~/.art-wallpaper/venv/bin/python3 rotate.py --selftest      # previews en _preview/ (sin red, sin tocar el fondo)
+~/.art-wallpaper/venv/bin/python3 rotate.py --compact       # reduce el caché guardado y aplica el techo (250 MB)
 tail -f ~/.art-wallpaper/rotator.log           # ver el log
 ./install.sh --uninstall                       # quitar la rotación
 ```
@@ -32,7 +33,7 @@ instala solo dentro de un venv aislado en `~/.art-wallpaper/venv`.
 | Archivo | Rol |
 |---|---|
 | `rotate.py` | **Todo el motor** en un solo archivo: elige → resuelve ficha → baja imagen → compone → fija el fondo. |
-| `artworks.json` | Catálogo de obras (curadas + "auto") con sus fichas/notas. |
+| `artworks.json` | Catálogo de obras (curadas + "auto") con sus fichas/notas. **195 obras** (184 en rotación; `"skip"` marca las que no tienen imagen utilizable). |
 | `install.sh` | Instala/desinstala el LaunchAgent; crea el venv. |
 | `com.art-wallpaper.rotator.plist.template` | Plantilla del LaunchAgent (launchd), 1800 s. |
 | `README.md` | Doc para el usuario. |
@@ -40,11 +41,13 @@ instala solo dentro de un venv aislado en `~/.art-wallpaper/venv`.
 **Flujo de una rotación** (`run_once` en `rotate.py`):
 1. `pick_artwork` — aleatorio ponderado (favoritas ×4, evita las últimas 12).
 2. `resolve_meta` — ficha de la obra (ver abajo).
-3. `fetch_image` — descarga la imagen a **resolución original** y la cachea.
+3. `fetch_image` — descarga la imagen **acotada a `ART_MAX_SIDE`** (miniatura de Wikimedia) y la
+   cachea ya reducida.
 4. `get_artist_image` — foto del artista desde Wikidata (opcional, cacheada).
-5. `compose` — pared de museo + marco + luz + sombra + `build_card` (la cartela).
+5. `compose` — pared + marco fino + lavado de luz + sombra de contacto + `build_label`.
 6. `set_wallpaper` — osascript a todos los monitores/Spaces.
-7. Si una obra falla, se prueba otra (hasta `MAX_ATTEMPTS`): el fondo nunca queda en blanco.
+7. `prune_cache` — aplica el techo de `CACHE_BUDGET_MB` borrando las imágenes menos usadas.
+8. Si una obra falla, se prueba otra (hasta `MAX_ATTEMPTS`): el fondo nunca queda en blanco.
 
 ## Modelo de datos: curada vs auto
 
@@ -59,6 +62,9 @@ Cada entrada de `artworks.json` es de uno de dos tipos:
   obra es famosa** (técnica, escándalo, robo, símbolo, influencia), no su procedencia.
 
 Añadir una obra = una línea: `{ "id": "algo", "wiki": "Título_EN_Wikipedia", "note": "Por qué es célebre..." }`.
+Antes de añadirla, comprobar su `summary` en la API: el artículo debe ser la OBRA (no el tema ni la
+montaña) y su `originalimage` medir ≥1.400 px. `"skip": "motivo"` la deja documentada fuera de la
+rotación.
 `"fav": true` la hace salir más. Para control total, fija cualquier campo a mano.
 
 Campos de ficha: `title, orig, artist, year, country, medium, size, place, note`. País → bandera
@@ -72,10 +78,27 @@ por `country_code()`; la bandera se **dibuja** (no emoji). La foto sale de Wikid
 - **Wikidata para datos, notas curadas** — los hechos estructurados los da bien Wikidata; el "por
   qué importa" lo escribe un humano/Claude (Wikipedia lidera con datos aburridos).
 - **Banderas dibujadas por código** (`draw_flag`, ~18 países) — sin depender de fuentes de emoji.
-- **Estética de museo** — `make_background` (pared greige + textura), `_light_pool` (foco cálido +
-  viñeta), `draw_frame` (marco dorado con bisel + sombra), placa marfil con texto oscuro.
+- **Estética de white cube, no de museo decimonónico** — la versión con pared greige, foco cálido
+  con viñeta, marco dorado con bisel y tarjeta marfil redondeada con sombra se leía como un fondo
+  de Windows 95. Lo que la fecha no es un detalle sino el conjunto de efectos: degradado radial,
+  bisel, dorado y tarjeta flotante. Ahora: `make_background` (pared blanca plana + grano al 2%),
+  `_wall_light` (lavado cenital del 4%, sin viñeta), `draw_frame` (banda negra fina y plana, una
+  sola línea de luz en el canto) y `build_label` (texto impreso en la pared, sin tarjeta).
+- **Una sola tipografía sans para todo** (Helvetica Neue por índice dentro del `.ttc`): la
+  jerarquía la dan el cuerpo y el gris, no la mezcla serif/sans ni el dorado. Es lo que hace una
+  cartela del Tate o del Pompidou.
+- **Variante oscura en una línea**: `DARK_ROOM = True` en la cabecera cambia a sala grafito.
 - **La pintura manda** — la cartela va en su columna a la derecha, **nunca superpuesta**; se recortó
   su ancho para dar protagonismo a la obra.
+- **El caché se dimensiona por la pantalla, no por el archivo original** — guardar el TIFF de 80 MB
+  de un museo es como imprimir una valla publicitaria para colgarla en la nevera: la salida son
+  2560×1664 y el cuadro ocupa ~1.400 px de alto. Se guarda a 2.200 px (`ART_MAX_SIDE`) y el retrato
+  a 420 px (`FACE_MAX_SIDE`). Medido: 717 MB → 84 MB sin diferencia visible.
+- **Techo, no limpieza manual** — `prune_cache` corre en cada rotación y borra por *uso* (cada
+  reutilización toca el mtime con `os.utime`), no por fecha de descarga. El caché no puede volver
+  a desbordarse aunque el catálogo crezca.
+- **La ventana de no-repetición es proporcional al catálogo** (`recent_window`, 60%), no un número
+  fijo: con 48 rotaciones al día, 12 obras vetadas significaban volver a ver la misma en 6 horas.
 
 ## Trampas / lecciones aprendidas (¡importantes!)
 
@@ -83,6 +106,19 @@ por `country_code()`; la bandera se **dibuja** (no emoji). La foto sale de Wikid
   `$VENV…`) bajo `set -u`: lo malinterpreta como "unbound variable". Usa `${VAR}` y ASCII (`...`).
 - **Fuentes**: `load_font` cae a *cualquier* TrueType disponible al tamaño pedido si falta el estilo
   (evita el bitmap de 10 px que encogía la nota itálica). En macOS usa Georgia/Helvetica/Arial.
+- **Wikipedia rate-limita (HTTP 429)** si se le piden fichas en ráfaga. Una rotación cada 30 min no
+  la toca, pero cualquier script que valide el catálogo entero debe ir a ~1 petición cada 1,5 s y
+  reintentar con espera; si no, devuelve cuerpos vacíos que parecen "el artículo no existe".
+- **El `wiki` puede apuntar al artículo equivocado y nadie se entera.** `Mont_Sainte-Victoire` es la
+  MONTAÑA (salía su foto enmarcada), `Gare_Saint-Lazare` es la ESTACIÓN y `Rain,_Steam_and_Speed`
+  es un disco de los Mutton Birds de 1999. El síntoma es una ficha sin autor: si Wikidata no
+  devuelve creador (P170), casi siempre es que el Q-id no es una obra de arte. Los títulos buenos
+  llevan el sufijo: `Mont_Sainte-Victoire_(Cézanne)`. Auditoría: pedir el `summary` de cada entrada
+  y exigir que la `description` diga painting/series/fresco/print.
+- **Verificar una obra nueva ANTES de meterla**: el artículo debe existir (no ser página de
+  desambiguación) y su `originalimage` medir ≥1.400 px. Muchas obras del siglo XX solo tienen en
+  Wikipedia una imagen de uso legítimo a 800 px: enmarcada se ve mal. Títulos con `?` o con varias
+  versiones (Munch, Klimt, Rubens) casi siempre necesitan el sufijo entre paréntesis.
 - **Red**: se necesita internet para bajar la obra (Wikipedia/Wikimedia) y los datos/foto (Wikidata).
   Todo se cachea; tras la primera vez, cada obra se recompone offline. Degrada con elegancia.
 - **Caché de fichas**: `resolve_meta` cachea en `meta/<id>.json`. Si cambias una `note` en el JSON,

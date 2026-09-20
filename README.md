@@ -4,14 +4,16 @@
 > [`CLAUDE.md`](CLAUDE.md) (memoria del proyecto) y [`ROADMAP.md`](ROADMAP.md).
 
 Cambia el fondo de escritorio de tu Mac cada **30 minutos** por una **pintura icónica**
-a **resolución original** (máximo detalle), acompañada de una **cartela de museo** con:
+a **máximo detalle en pantalla**, acompañada de una **cartela de museo** con:
 nombre · autor · año · **país** · museo · ciudad · y una **nota grande y legible** que
 explica qué representa la obra y por qué importa.
 
 - **Layout de galería:** la pintura **completa, sin recortar**, y a su lado la **cartela**
   en su propia columna — **nunca se superponen** (como un cuadro con su cartelita al lado).
-- Fondo de galería (carbón + viñeta) y una tarjeta sobria con hilo dorado.
-- **Catálogo abierto para conocer arte:** ~80 obras semilla de todas las épocas y culturas
+- **Estética de sala contemporánea** (Tate Modern / MoMA): pared blanca plana, marco fino negro,
+  sombra de contacto y la ficha impresa en la pared en Helvetica Neue — sin dorados, sin biseles
+  y sin tarjeta flotante. Variante de sala oscura con `DARK_ROOM = True` en `rotate.py`.
+- **Catálogo abierto para conocer arte:** 195 obras (184 en rotación) de todas las épocas y culturas
   (del Bosco y Vermeer a Hopper, Kahlo, Hokusai y Picasso). No es una lista fija: cualquier
   entrada con solo `{id, wiki}` **rellena su ficha automáticamente** desde Wikidata + Wikipedia
   (autor, año, técnica, medidas, museo y nota en español), así que añadir obras es trivial.
@@ -44,6 +46,7 @@ PY=~/.art-wallpaper/venv/bin/python3
 $PY rotate.py --once              # cambiar de obra ahora
 $PY rotate.py --id nighthawks     # forzar una obra concreta (ver ids en artworks.json)
 $PY rotate.py --selftest          # genera previews en _preview/ sin red ni tocar el fondo
+$PY rotate.py --compact           # reduce el caché ya guardado y aplica el techo de 250 MB
 tail -f ~/.art-wallpaper/rotator.log  # ver el log
 ./install.sh --uninstall          # quitar la rotación
 ```
@@ -57,10 +60,12 @@ tail -f ~/.art-wallpaper/rotator.log  # ver el log
     primera aparición: `en.wikipedia` (imagen original + Q-id) → **Wikidata** (autor, año,
     técnica, medidas, museo, vía una consulta SPARQL con etiquetas en español) → `es.wikipedia`
     (nota). El resultado se **cachea** en `~/.art-wallpaper/meta/<id>.json` (se resuelve una vez).
-- La imagen se baja a **resolución original** y se **cachea** en `~/.art-wallpaper/cache/`.
-- La selección es **aleatoria ponderada**: evita repetir las últimas 12 y da x4 de peso a las
-  favoritas (`"fav": true`). Si una obra falla (título malo, sin red), prueba con otra —el fondo
-  nunca queda en blanco.
+- La imagen se baja **acotada a 2.200 px de lado** (lo que la pantalla usa; el cuadro se ve
+  exactamente igual) y se **cachea** en `~/.art-wallpaper/cache/`. El caché tiene **techo
+  automático de 250 MB**: en cada rotación se borran las imágenes menos usadas.
+- La selección es **aleatoria ponderada**: evita repetir el **60% más reciente** del catálogo y da
+  x2 de peso a las favoritas (`"fav": true`). Si una obra falla (título malo, sin red), prueba con
+  otra —el fondo nunca queda en blanco.
 
 ## Personalizar
 

@@ -3,8 +3,8 @@
 Lista viva de mejoras. No hay orden estricto; toma la que te apetezca. Marca con ✅ al terminar.
 
 ## Contenido
-- [ ] Ampliar el catálogo (arte no occidental: ukiyo-e más allá de Hokusai, arte islámico,
-      muralismo mexicano, arte africano y precolombino, contemporáneo).
+- [ ] Ampliar el catálogo (v1.1 lo llevó a 196 obras; siguen pendientes arte islámico,
+      arte africano y precolombino, y más contemporáneo).
 - [ ] Notas "por qué es célebre" para las obras que aún salgan de Wikidata sin nota propia.
 - [ ] Colecciones temáticas seleccionables (impresionismo, retrato, paisaje, un solo museo).
 
@@ -16,7 +16,7 @@ Lista viva de mejoras. No hay orden estricto; toma la que te apetezca. Marca con
 ## Comportamiento
 - [ ] Intervalo configurable desde un archivo `config.json` (en vez de editar el plist).
 - [ ] Menu bar app (rumps) con "siguiente / anterior / fijar esta / abrir en el navegador".
-- [ ] "No repetir en N días" en vez de solo las últimas 12.
+- [x] "No repetir en N días" — hecho en v1.1: la ventana es el 60% del catálogo (~2,5 días).
 - [ ] Respetar modo oscuro/claro del sistema para el tono de la pared.
 
 ## Robustez

@@ -50,19 +50,41 @@ STATE_FILE = HOME / "state.json"  # obras mostradas recientemente (para no repet
 CATALOG = HERE / "artworks.json"
 
 USER_AGENT = "art-wallpaper/1.1 (personal desktop art rotator)"
-RECENT_MEMORY = 12                # cuántas obras recientes evitar repetir
-FAV_WEIGHT = 4                    # peso de una obra favorita frente a 1 de una normal
+RECENT_MEMORY = 12                # mínimo de obras recientes a evitar (ver recent_window)
+RECENT_FRACTION = 0.6             # ...o el 60% del catálogo, lo que sea mayor
+FAV_WEIGHT = 2                    # peso de una obra favorita frente a 1 de una normal
 MAX_ATTEMPTS = 8                  # obras a intentar antes de rendirse en una rotación
 
-# Estética — pared de galería (luz cálida tipo museo NY/Londres)
-WALL_TOP = (206, 198, 185)      # greige cálido, algo más claro arriba
-WALL_BOT = (176, 167, 153)      # más apagado hacia el suelo
-WALL_WARM = (248, 243, 232)     # color del haz de luz que ilumina el cuadro
-GOLD = (198, 168, 109)          # dorado (hilo de la placa)
-FRAME_GOLD = (196, 162, 96)     # marco dorado base
-FRAME_HI = (232, 210, 156)      # brillo del bisel
-FRAME_LO = (120, 92, 46)        # sombra del bisel / rebaje
-PAINTING_PAD = 0.058
+# Caché en disco: las imágenes se guardan YA reducidas a lo que la pantalla usa,
+# y el total tiene techo (se borran las menos usadas). Ver shrink_image/prune_cache.
+ART_MAX_SIDE = 2200               # px del lado largo de una pintura cacheada
+ART_QUALITY = 88
+FACE_MAX_SIDE = 420               # px del retrato del artista (se pinta a ~110 px)
+FACE_QUALITY = 88
+CACHE_BUDGET_MB = 250             # techo del caché de imágenes (cache/ + meta/*.img)
+MIN_ART_SIDE = 1000               # por debajo de esto la obra se ve pixelada enmarcada
+
+# Estética — sala contemporánea tipo white cube (Tate Modern / MoMA / Pompidou):
+# pared plana sin degradados de foco, marco fino y plano, y la cartela IMPRESA en la
+# pared (sin tarjeta flotante). Todo el texto en una sans neutra.
+WALL_TOP = (243, 242, 239)      # blanco de galería, apenas cálido
+WALL_BOT = (232, 230, 226)      # caída mínima hacia el suelo
+WALL_LIGHT = (252, 251, 249)    # lavado de luz cenital, casi imperceptible
+FRAME_DARK = (26, 25, 23)       # marco fino, negro neutro
+FRAME_EDGE = (58, 56, 52)       # canto superior del marco (una línea de luz)
+INK = (24, 23, 21)              # texto principal
+INK_SOFT = (74, 71, 67)         # nota
+INK_MUTED = (124, 120, 114)     # datos secundarios
+HAIRLINE = (200, 197, 191)      # filete de separación
+PAINTING_PAD = 0.062
+
+# Variante oscura: pon DARK_ROOM = True para una sala de paredes grafito.
+DARK_ROOM = False
+if DARK_ROOM:
+    WALL_TOP, WALL_BOT, WALL_LIGHT = (38, 37, 35), (28, 27, 26), (52, 50, 47)
+    FRAME_DARK, FRAME_EDGE = (232, 230, 226), (255, 255, 255)
+    INK, INK_SOFT, INK_MUTED, HAIRLINE = ((240, 238, 234), (196, 192, 186),
+                                          (150, 146, 140), (74, 71, 67))
 
 
 # ---------------------------------------------------------------------------
@@ -81,35 +103,120 @@ def _curl(url: str, dest: Path, timeout: int = 60) -> bool:
         return False
 
 
-def _get_json(url: str, timeout: int = 25):
-    try:
-        out = subprocess.run(
-            ["curl", "-sSL", "--fail", "--max-time", str(timeout), "-A", USER_AGENT, url],
-            check=True, capture_output=True, text=True,
-        ).stdout
-        return json.loads(out)
-    except (subprocess.CalledProcessError, ValueError):
+def _thumb_url(url: str, width: int) -> str | None:
+    """Reescribe una URL de Wikimedia a su miniatura de ancho `width`, para no bajar
+    un TIFF de 80 MB cuando la pantalla usa 2.600 px. None si la URL no es de Commons."""
+    m = re.match(r"(https://upload\.wikimedia\.org/wikipedia/[^/]+)/([0-9a-f])/([0-9a-f]{2})/(.+)$", url)
+    if not m or "/thumb/" in url:
         return None
+    base, d1, d2, name = m.groups()
+    thumb = f"{width}px-{name}"
+    if not name.lower().endswith((".jpg", ".jpeg", ".png")):
+        thumb += ".jpg"          # tif/svg/webp se sirven convertidos
+    return f"{base}/thumb/{d1}/{d2}/{name}/{thumb}"
+
+
+def shrink_image(path: Path, max_side: int, quality: int) -> Path:
+    """Deja en disco SOLO la versión que el compositor necesita: JPEG, lado largo
+    acotado. Es la diferencia entre 300 MB de caché y 30 MB."""
+    try:
+        from PIL import Image
+        Image.MAX_IMAGE_PIXELS = None   # las fuentes son Wikimedia; un TIFF enorme no es un ataque
+        with Image.open(path) as im:
+            im.load()
+            w, h = im.size
+            if im.mode not in ("RGB", "L"):
+                im = im.convert("RGB")
+            if max(w, h) > max_side:
+                k = max_side / max(w, h)
+                im = im.resize((max(1, round(w * k)), max(1, round(h * k))), Image.LANCZOS)
+            elif path.suffix and im.format == "JPEG" and path.stat().st_size < 3_000_000:
+                return path      # ya es pequeña y es JPEG: no la toques
+            tmp = path.with_suffix(".tmp")
+            im.save(tmp, "JPEG", quality=quality, optimize=True, progressive=True)
+        tmp.replace(path)
+    except Exception as e:       # noqa: BLE001 — una imagen rara no puede tumbar la rotación
+        print(f"[shrink] {path.name}: {e} — descartada, se volverá a bajar", file=sys.stderr)
+        try:
+            path.unlink()        # sólo es caché: mejor re-bajarla que arrastrar un fichero roto
+        except OSError:
+            pass
+    return path
+
+
+def _cache_files() -> list[Path]:
+    return [p for p in list(CACHE_DIR.glob("*.img")) + list(META_DIR.glob("*.img")) if p.is_file()]
+
+
+def prune_cache(budget_mb: int = CACHE_BUDGET_MB) -> int:
+    """Techo duro del caché: borra las imágenes menos usadas hasta bajar del presupuesto.
+    'Menos usada' = mtime más antiguo; fetch_image toca el fichero cada vez que lo reusa."""
+    files = sorted(_cache_files(), key=lambda p: p.stat().st_mtime)
+    total = sum(p.stat().st_size for p in files)
+    budget = budget_mb * 1024 * 1024
+    freed = 0
+    while total > budget and len(files) > 1:
+        old = files.pop(0)
+        try:
+            n = old.stat().st_size
+            old.unlink()
+            total -= n
+            freed += n
+        except OSError:
+            pass
+    return freed
+
+
+def compact_cache() -> None:
+    """Pasada única sobre el caché ya existente: reduce todo y aplica el techo."""
+    before = sum(p.stat().st_size for p in _cache_files())
+    for p in sorted(CACHE_DIR.glob("*.img")):
+        shrink_image(p, ART_MAX_SIDE, ART_QUALITY)
+    for p in sorted(META_DIR.glob("*.img")):
+        shrink_image(p, FACE_MAX_SIDE, FACE_QUALITY)
+    prune_cache()
+    after = sum(p.stat().st_size for p in _cache_files())
+    mb = lambda n: f"{n / 1024 / 1024:.0f} MB"  # noqa: E731
+    print(f"Caché compactado: {mb(before)} -> {mb(after)} ({len(_cache_files())} imágenes)")
+
+
+def _get_json(url: str, timeout: int = 25, tries: int = 3):
+    """Wikipedia y Wikidata devuelven 429/400 cuando se les pide de más. Reintenta con
+    espera: un fallo pasajero no debe convertirse en una ficha vacía cacheada para siempre."""
+    for attempt in range(tries):
+        try:
+            out = subprocess.run(
+                ["curl", "-sSL", "--fail", "--max-time", str(timeout), "-A", USER_AGENT, url],
+                check=True, capture_output=True, text=True,
+            ).stdout
+            return json.loads(out)
+        except (subprocess.CalledProcessError, ValueError):
+            if attempt < tries - 1:
+                time.sleep(3 * (attempt + 1))
+    return None
 
 
 # ---------------------------------------------------------------------------
 # Fuentes (macOS primero, DejaVu como fallback para pruebas)
 # ---------------------------------------------------------------------------
+# Una sans neutra para TODO, como en las cartelas de una sala contemporánea.
+# Los .ttc de macOS son colecciones: (ruta, índice de la variante).
+_HNEUE = "/System/Library/Fonts/HelveticaNeue.ttc"
+_AVENIR = "/System/Library/Fonts/Avenir Next.ttc"
 FONT_CANDIDATES = {
-    "serif_bold": ["/System/Library/Fonts/Supplemental/Georgia Bold.ttf",
-                   "/System/Library/Fonts/Supplemental/Times New Roman Bold.ttf",
-                   "/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf"],
-    "serif": ["/System/Library/Fonts/Supplemental/Georgia.ttf",
-              "/System/Library/Fonts/Supplemental/Times New Roman.ttf",
-              "/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf"],
-    "serif_italic": ["/System/Library/Fonts/Supplemental/Georgia Italic.ttf",
-                     "/System/Library/Fonts/Supplemental/Times New Roman Italic.ttf",
-                     "/usr/share/fonts/truetype/dejavu/DejaVuSerif-Italic.ttf"],
-    "sans": ["/System/Library/Fonts/Supplemental/Arial.ttf",
-             "/System/Library/Fonts/Helvetica.ttc",
-             "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"],
-    "sans_bold": ["/System/Library/Fonts/Supplemental/Arial Bold.ttf",
+    "ui_thin":   [(_HNEUE, 12), (_AVENIR, 10), "/System/Library/Fonts/Supplemental/Arial.ttf",
+                  "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"],
+    "ui_light":  [(_HNEUE, 7), (_AVENIR, 7), "/System/Library/Fonts/Supplemental/Arial.ttf",
+                  "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"],
+    "ui":        [(_HNEUE, 0), (_AVENIR, 7), "/System/Library/Fonts/Supplemental/Arial.ttf",
+                  "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"],
+    "ui_medium": [(_HNEUE, 10), (_AVENIR, 5), "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
                   "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"],
+    "ui_bold":   [(_HNEUE, 1), (_AVENIR, 0), "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
+                  "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"],
+    "ui_italic": [(_HNEUE, 8), (_AVENIR, 4),
+                  "/System/Library/Fonts/Supplemental/Arial Italic.ttf",
+                  "/usr/share/fonts/truetype/dejavu/DejaVuSans-Oblique.ttf"],
 }
 
 
@@ -131,10 +238,11 @@ def _any_ttf() -> str | None:
 
 
 def load_font(kind: str, size: int) -> ImageFont.FreeTypeFont:
-    for path in FONT_CANDIDATES[kind]:
+    for cand in FONT_CANDIDATES[kind]:
+        path, index = cand if isinstance(cand, tuple) else (cand, 0)
         if os.path.exists(path):
             try:
-                return ImageFont.truetype(path, size)
+                return ImageFont.truetype(path, size, index=index)
             except OSError:
                 continue
     # Estilo no disponible: usa CUALQUIER TrueType al tamaño pedido (nunca el bitmap de 10px).
@@ -169,9 +277,16 @@ def load_catalog() -> list:
     return json.loads(CATALOG.read_text())["artworks"]
 
 
+def recent_window(catalog_size: int) -> int:
+    """Cuántas obras recientes se vetan. Con 48 rotaciones al día, una ventana de 12
+    deja que un cuadro vuelva a las 6 horas; al 60% del catálogo tarda ~2 días."""
+    return max(RECENT_MEMORY, min(catalog_size - 2, int(catalog_size * RECENT_FRACTION)))
+
+
 def pick_artwork(catalog: list, exclude: set):
     import random
-    pool = [a for a in catalog if a["id"] not in exclude] or catalog
+    usable = [a for a in catalog if not a.get("skip")] or catalog
+    pool = [a for a in usable if a["id"] not in exclude] or usable
     weights = [FAV_WEIGHT if a.get("fav") else 1 for a in pool]
     return random.choices(pool, weights=weights, k=1)[0]
 
@@ -231,9 +346,17 @@ SELECT ?creatorLabel ?inception ?materialLabel ?locationLabel ?collectionLabel
     val = lambda k: r.get(k, {}).get("value", "")
     place = val("locationLabel") or val("collectionLabel")
     country = val("originLabel") or val("creatorCountryLabel")
+    if country.lower() in ("apátrida", "apatrida", "stateless"):
+        country = ""
     dims = ""
     if val("height") and val("width"):
-        dims = f"{_fmt_dim(val('height'))} × {_fmt_dim(val('width'))} cm"
+        hh, ww = val("height"), val("width")
+        try:  # algunas fichas vienen en metros: un cuadro de "3,4 cm" no existe
+            if max(float(hh), float(ww)) < 12:
+                hh, ww = str(float(hh) * 100), str(float(ww) * 100)
+        except (TypeError, ValueError):
+            pass
+        dims = f"{_fmt_dim(hh)} × {_fmt_dim(ww)} cm"
     return {
         "artist": val("creatorLabel"),
         "year": _year_from(val("inception")),
@@ -269,11 +392,14 @@ def resolve_meta(art: dict) -> dict:
     if cache.exists():
         try:
             meta = json.loads(cache.read_text())
-            if art.get("note"):
-                meta["note"] = art["note"]
-            return meta
+            # Una ficha sin autor es el residuo de una consulta fallida a Wikidata: no la
+            # damos por buena, se vuelve a resolver (si vuelve a fallar, se usa igual).
+            if meta.get("artist"):
+                if art.get("note"):
+                    meta["note"] = art["note"]
+                return meta
         except ValueError:
-            pass
+            meta = None
 
     summ = wiki_summary(art["wiki"], "en")
     if not summ:
@@ -306,7 +432,8 @@ def resolve_meta(art: dict) -> dict:
         "image_url": (summ.get("originalimage") or summ.get("thumbnail") or {}).get("source"),
     }
     META_DIR.mkdir(parents=True, exist_ok=True)
-    cache.write_text(json.dumps(meta, ensure_ascii=False, indent=2))
+    if facts.get("artist") or not qid:
+        cache.write_text(json.dumps(meta, ensure_ascii=False, indent=2))  # sólo cacheamos lo bueno
     return meta
 
 
@@ -318,6 +445,7 @@ def get_artist_image(art: dict, meta: dict) -> Path | None:
         return None
     cached = META_DIR / f"artist-{slug}.img"
     if cached.exists() and cached.stat().st_size > 512:
+        os.utime(cached, None)
         return cached
 
     summ = wiki_summary(art["wiki"], "en")
@@ -331,7 +459,10 @@ def get_artist_image(art: dict, meta: dict) -> Path | None:
     except (TypeError, KeyError, IndexError):
         return None
     META_DIR.mkdir(parents=True, exist_ok=True)
-    return cached if _curl(url, cached) else None
+    thumb = _thumb_url(url, FACE_MAX_SIDE)
+    if thumb and _curl(thumb, cached):
+        return shrink_image(cached, FACE_MAX_SIDE, FACE_QUALITY)
+    return shrink_image(cached, FACE_MAX_SIDE, FACE_QUALITY) if _curl(url, cached) else None
 
 
 # ---------------------------------------------------------------------------
@@ -340,6 +471,7 @@ def get_artist_image(art: dict, meta: dict) -> Path | None:
 def fetch_image(art: dict, image_url_hint: str | None) -> Path:
     cached = CACHE_DIR / f"{art['id']}.img"
     if cached.exists() and cached.stat().st_size > 512:
+        os.utime(cached, None)   # marca de uso: el techo del caché borra lo menos usado
         return cached
 
     urls = []
@@ -355,9 +487,26 @@ def fetch_image(art: dict, image_url_hint: str | None) -> Path:
                     + urllib.parse.quote(art["file"], safe=""))
 
     for u in urls:
-        if _curl(u, cached):
-            return cached
+        thumb = _thumb_url(u, ART_MAX_SIDE)
+        if (thumb and _curl(thumb, cached)) or _curl(u, cached):
+            img = shrink_image(cached, ART_MAX_SIDE, ART_QUALITY)
+            side = _long_side(img)
+            if side and side < MIN_ART_SIDE:
+                # Muchas obras del siglo XX solo tienen en Wikipedia una imagen de uso
+                # legítimo de pocos cientos de px: enmarcada se vería pixelada.
+                img.unlink(missing_ok=True)
+                raise RuntimeError(f"imagen demasiado pequeña ({side} px) para '{art['id']}'")
+            return img
     raise RuntimeError(f"No se pudo descargar la imagen de '{art['id']}'.")
+
+
+def _long_side(path: Path) -> int:
+    try:
+        from PIL import Image
+        with Image.open(path) as im:
+            return max(im.size)
+    except Exception:  # noqa: BLE001
+        return 0
 
 
 # ---------------------------------------------------------------------------
@@ -384,58 +533,37 @@ def screen_size() -> tuple[int, int]:
 # Composición
 # ---------------------------------------------------------------------------
 def make_background(w: int, h: int) -> Image.Image:
-    """Pared de galería: greige cálido con gradiente vertical y una textura de pared fina."""
+    """Pared de white cube: blanca, plana y mate. Sin degradado de foco: la caída
+    vertical es de una decena de niveles y el grano evita que se vea digital."""
     top = Image.new("RGB", (w, h), WALL_TOP)
     bot = Image.new("RGB", (w, h), WALL_BOT)
     m = Image.new("L", (1, h))
     for y in range(h):
-        m.putpixel((0, y), int(255 * (y / h)))
+        m.putpixel((0, y), int(255 * (y / h) ** 1.6))
     wall = Image.composite(bot, top, m.resize((w, h)))
-    # textura de pared muy sutil (para que no se vea plano/digital)
-    noise = Image.effect_noise((w, h), 14).convert("RGB")
-    wall = Image.blend(wall, noise, 0.045)
-    return wall
+    noise = Image.effect_noise((w, h), 10).convert("RGB")
+    return Image.blend(wall, noise, 0.022)
 
 
-def _light_pool(wall: Image.Image, cx: int, cy: int, rx: int, ry: int) -> Image.Image:
-    """Simula el haz cálido de un foco de museo centrado en el cuadro; oscurece bordes."""
+def _wall_light(wall: Image.Image, cx: int, top_y: int, rx: int) -> Image.Image:
+    """Lavado de luz cenital sobre la obra. Un museo moderno ilumina parejo: esto es
+    un 4% de aclarado, no el halo de un foco. Sin viñeta en las esquinas."""
     w, h = wall.size
     glow = Image.new("L", (w, h), 0)
-    ImageDraw.Draw(glow).ellipse([cx - rx, cy - ry, cx + rx, cy + ry], fill=255)
-    glow = glow.filter(ImageFilter.GaussianBlur(radius=min(w, h) // 5))
-    warm = Image.new("RGB", (w, h), WALL_WARM)
-    wall = Image.composite(warm, wall, glow.point(lambda v: int(v * 0.5)))
-    # leve caída de luz en las esquinas
-    vig = Image.new("L", (w, h), 0)
-    ImageDraw.Draw(vig).ellipse([-w * 0.15, -h * 0.15, w * 1.15, h * 1.15], fill=255)
-    vig = vig.filter(ImageFilter.GaussianBlur(radius=min(w, h) // 5))
-    dark = Image.blend(wall, Image.new("RGB", (w, h), (0, 0, 0)), 0.28)
-    return Image.composite(wall, dark, vig)
+    ImageDraw.Draw(glow).ellipse([cx - rx, top_y - int(h * 0.55), cx + rx, top_y + int(h * 0.45)],
+                                 fill=255)
+    glow = glow.filter(ImageFilter.GaussianBlur(radius=min(w, h) // 3))
+    lit = Image.new("RGB", (w, h), WALL_LIGHT)
+    return Image.composite(lit, wall, glow.point(lambda v: int(v * 0.42)))
 
 
 def draw_frame(canvas: Image.Image, x: int, y: int, iw: int, ih: int, t: int) -> None:
-    """Marco dorado con bisel sobre el lienzo en (x,y,iw,ih)."""
+    """Marco de galería contemporánea: una banda fina, plana y negra. Sin bisel, sin
+    dorado, sin brillo. Toda la profundidad la da la sombra de contacto, no el marco."""
     d = ImageDraw.Draw(canvas)
-    d.rectangle([x - t, y - t, x + iw + t - 1, y + ih + t - 1], fill=FRAME_GOLD)
-    # brillo del bisel (arriba/izquierda) y sombra (abajo/derecha)
-    hi = max(2, t // 4)
-    d.line([x - t, y - t, x + iw + t - 1, y - t], fill=FRAME_HI, width=hi)
-    d.line([x - t, y - t, x - t, y + ih + t - 1], fill=FRAME_HI, width=hi)
-    d.line([x - t, y + ih + t - 1, x + iw + t - 1, y + ih + t - 1], fill=FRAME_LO, width=hi)
-    d.line([x + iw + t - 1, y - t, x + iw + t - 1, y + ih + t - 1], fill=FRAME_LO, width=hi)
-    # rebaje oscuro pegado al lienzo (da profundidad)
-    d.rectangle([x - 2, y - 2, x + iw + 1, y + ih + 1], outline=FRAME_LO, width=max(2, t // 3))
-    d.rectangle([x - 1, y - 1, x + iw, y + ih], outline=(30, 22, 10), width=2)
-
-
-def rounded_panel(size, radius, fill, border=None, bw=2) -> Image.Image:
-    w, h = size
-    panel = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-    d = ImageDraw.Draw(panel)
-    d.rounded_rectangle([0, 0, w - 1, h - 1], radius=radius, fill=fill)
-    if border:
-        d.rounded_rectangle([0, 0, w - 1, h - 1], radius=radius, outline=border, width=bw)
-    return panel
+    d.rectangle([x - t, y - t, x + iw + t - 1, y + ih + t - 1], fill=FRAME_DARK)
+    # una sola línea de luz en el canto superior: basta para que el marco tenga cuerpo
+    d.line([x - t, y - t, x + iw + t - 1, y - t], fill=FRAME_EDGE, width=max(1, t // 6))
 
 
 def wrap_text(text, font, max_w, draw) -> list:
@@ -557,7 +685,7 @@ def draw_flag(code: str, w: int, h: int):
         d.rectangle([0, h // 2 - int(h * 0.10), w, h // 2 + int(h * 0.10)], fill=(200, 16, 46))
     else:
         return None
-    ImageDraw.Draw(im).rectangle([0, 0, w - 1, h - 1], outline=(120, 110, 95))
+    ImageDraw.Draw(im).rectangle([0, 0, w - 1, h - 1], outline=HAIRLINE)
     return im.convert("RGBA")
 
 
@@ -572,43 +700,39 @@ def circle_portrait(img: Image.Image, d: int) -> Image.Image:
     ImageDraw.Draw(mask).ellipse([0, 0, d - 1, d - 1], fill=255)
     out = Image.new("RGBA", (d, d), (0, 0, 0, 0))
     out.paste(im, (0, 0), mask)
-    ImageDraw.Draw(out).ellipse([1, 1, d - 2, d - 2], outline=(150, 116, 52), width=max(2, d // 26))
+    ImageDraw.Draw(out).ellipse([0, 0, d - 1, d - 1], outline=HAIRLINE, width=max(1, d // 60))
     return out
 
 
-def build_card(meta: dict, card_w: int, scale: float) -> Image.Image:
-    """Cartela de museo: identidad de la obra + una nota legible sobre por qué importa.
-    Sin rótulos meta ('ficha técnica', 'rotación'): solo la obra. Tolera campos ausentes."""
-    pad = int(40 * scale)
-    inner_w = card_w - 2 * pad
-
-    f_title = load_font("serif_bold", int(52 * scale))
-    f_orig = load_font("serif_italic", int(25 * scale))
-    f_artist = load_font("serif", int(34 * scale))
-    f_line = load_font("sans", int(26 * scale))          # año · país
-    f_place = load_font("sans_bold", int(26 * scale))    # museo, ciudad
-    f_tech = load_font("sans", int(22 * scale))          # técnica · medidas (discreto)
-    f_note = load_font("serif_italic", int(31 * scale))  # la nota: GRANDE y legible
+def build_label(meta: dict, col_w: int, scale: float) -> Image.Image:
+    """Cartela de sala contemporánea: texto impreso DIRECTAMENTE en la pared, sin
+    tarjeta, sin marco y sin sombra. Todo en una sans neutra, alineado a la izquierda,
+    y la jerarquía la da el tamaño y el gris, no los adornos."""
+    f_title = load_font("ui_light", int(46 * scale))
+    f_orig = load_font("ui_italic", int(23 * scale))
+    f_artist = load_font("ui_medium", int(30 * scale))
+    f_meta = load_font("ui_light", int(21 * scale))    # año · país
+    f_small = load_font("ui_light", int(20 * scale))   # técnica, museo
+    f_note = load_font("ui_light", int(26 * scale))
 
     probe = ImageDraw.Draw(Image.new("RGBA", (10, 10)))
     title = meta.get("title") or "Obra sin título"
-    title_lines = wrap_text(title, f_title, inner_w, probe)
+    title_lines = wrap_text(title, f_title, col_w, probe)
     orig = meta.get("orig") or ""
-    show_orig = bool(orig) and orig != title
+    show_orig = bool(orig) and orig.lower() not in title.lower()
 
     artist = meta.get("artist") or ""
     yc_line = " · ".join([b for b in (meta.get("year"), meta.get("country")) if b])
     place_line = meta.get("place") or ""
     tech_line = " · ".join([b for b in (meta.get("medium"), meta.get("size")) if b])
 
-    def lh(font, k=1.3):
+    def lh(font, k=1.22):
         asc, desc = font.getmetrics()
         return int((asc + desc) * k)
 
-    gap_s, gap_m, gap_l = int(7 * scale), int(16 * scale), int(28 * scale)
+    gap_xs, gap_s, gap_m, gap_l = (int(6 * scale), int(12 * scale),
+                                   int(26 * scale), int(38 * scale))
 
-    # Retrato del artista (foto) y bandera de nacionalidad. NO agrandan la placa:
-    # el retrato ocupa exactamente el alto del bloque autor+año (a su izquierda).
     portrait = None
     ap = meta.get("artist_img")
     if ap:
@@ -617,110 +741,96 @@ def build_card(meta: dict, card_w: int, scale: float) -> Image.Image:
         except Exception:  # noqa: BLE001
             portrait = None
     iso = country_code(meta.get("country"))
-    fh = int(f_line.size * 0.82)
+    fh = int(f_meta.size * 0.78)
     flag = draw_flag(iso, int(fh * 1.5), fh) if iso else None
 
-    block_h = (lh(f_artist) if artist else 0) + ((gap_s + lh(f_line)) if yc_line else 0)
-    d_ph = block_h if (portrait is not None and block_h > 0) else 0
-    gap_ph = int(18 * scale)
-    x_text = pad + (d_ph + gap_ph if d_ph else 0)
+    block_h = (lh(f_artist) if artist else 0) + ((gap_xs + lh(f_meta)) if yc_line else 0)
+    d_ph = int(block_h * 0.92) if (portrait is not None and block_h > 0) else 0
+    x_text = (d_ph + int(20 * scale)) if d_ph else 0
 
-    # nota: envuelve al ancho completo (va debajo del retrato)
-    note_lines = wrap_text(meta["note"], f_note, inner_w, probe) if meta.get("note") else []
+    note_lines = wrap_text(meta["note"], f_note, col_w, probe) if meta.get("note") else []
 
-    y = pad
+    # alto total (se mide antes de pintar para poder centrar/alinear el bloque)
+    y = 0
     for _ in title_lines:
-        y += lh(f_title)
+        y += lh(f_title, 1.16)
     if show_orig:
-        y += gap_s + lh(f_orig)
-    y += gap_l  # separador dorado
+        y += gap_xs + lh(f_orig)
     if block_h:
-        y += gap_m + block_h
-    if place_line:
-        y += gap_s + lh(f_place)
+        y += gap_l + block_h
     if tech_line:
-        y += gap_s + lh(f_tech)
+        y += gap_m + lh(f_small)
+    if place_line:
+        y += (gap_xs if tech_line else gap_m) + lh(f_small)
     if note_lines:
         y += gap_l + gap_m
         for _ in note_lines:
-            y += lh(f_note, 1.34)
-    card_h = y + pad
+            y += lh(f_note, 1.45)
+    label = Image.new("RGBA", (col_w, max(1, y)), (0, 0, 0, 0))
+    d = ImageDraw.Draw(label)
 
-    # Placa de museo: marfil cálido con texto oscuro (como una cartela real en la pared).
-    card = Image.new("RGBA", (card_w, card_h), (0, 0, 0, 0))
-    card.alpha_composite(rounded_panel((card_w, card_h), int(14 * scale),
-                                       fill=(243, 237, 224, 252), border=(206, 195, 173, 255),
-                                       bw=max(1, int(1.5 * scale))))
-    d = ImageDraw.Draw(card)
-    bronze = (150, 116, 52)
-
-    x, y = pad, pad
+    y = 0
     for line in title_lines:
-        d.text((x, y), line, font=f_title, fill=(38, 33, 28, 255))
-        y += lh(f_title)
+        d.text((0, y), line, font=f_title, fill=INK + (255,))
+        y += lh(f_title, 1.16)
     if show_orig:
-        y += gap_s
-        d.text((x, y), orig, font=f_orig, fill=(128, 120, 106, 255))
+        y += gap_xs
+        d.text((0, y), orig, font=f_orig, fill=INK_MUTED + (255,))
         y += lh(f_orig)
 
-    y += gap_l
-    d.rectangle([x, y, x + int(78 * scale), y + max(2, int(3 * scale))], fill=bronze)
-
     if block_h:
-        y += gap_m
+        y += gap_l
         block_top = y
         if d_ph:
-            card.alpha_composite(circle_portrait(portrait, d_ph), (x, block_top))
+            label.alpha_composite(circle_portrait(portrait, d_ph), (0, block_top))
         if artist:
-            d.text((x_text, y), artist, font=f_artist, fill=(52, 46, 39, 255))
+            d.text((x_text, y), artist, font=f_artist, fill=INK + (255,))
             y += lh(f_artist)
         if yc_line:
             if artist:
-                y += gap_s
-            d.text((x_text, y), yc_line, font=f_line, fill=(98, 90, 78, 255))
+                y += gap_xs
+            d.text((x_text, y), yc_line, font=f_meta, fill=INK_MUTED + (255,))
             if flag is not None:
-                fx = x_text + int(probe.textlength(yc_line, font=f_line)) + int(12 * scale)
-                fy = y + (lh(f_line) - fh) // 2 - int(2 * scale)
-                if fx + flag.width <= card_w - pad:
-                    card.alpha_composite(flag, (fx, fy))
-            y += lh(f_line)
+                fx = x_text + int(probe.textlength(yc_line, font=f_meta)) + int(11 * scale)
+                fy = y + (lh(f_meta) - fh) // 2 - int(2 * scale)
+                if fx + flag.width <= col_w:
+                    label.alpha_composite(flag, (fx, fy))
+            y += lh(f_meta)
         y = max(y, block_top + block_h)
 
-    if place_line:
-        y += gap_s
-        d.text((x, y), place_line, font=f_place, fill=(bronze[0], bronze[1], bronze[2], 255))
-        y += lh(f_place)
     if tech_line:
-        y += gap_s
-        d.text((x, y), tech_line, font=f_tech, fill=(140, 132, 120, 255))
-        y += lh(f_tech)
+        y += gap_m
+        d.text((0, y), tech_line, font=f_small, fill=INK_MUTED + (255,))
+        y += lh(f_small)
+    if place_line:
+        y += gap_xs if tech_line else gap_m
+        d.text((0, y), place_line, font=f_small, fill=INK_MUTED + (255,))
+        y += lh(f_small)
 
     if note_lines:
         y += gap_l
-        d.line([x, y, card_w - pad, y], fill=(206, 195, 176, 255), width=1)
+        d.rectangle([0, y, int(54 * scale), y + max(1, int(1.5 * scale))], fill=HAIRLINE + (255,))
         y += gap_m
         for line in note_lines:
-            d.text((x, y), line, font=f_note, fill=(46, 41, 35, 255))
-            y += lh(f_note, 1.34)
-    return card
+            d.text((0, y), line, font=f_note, fill=INK_SOFT + (255,))
+            y += lh(f_note, 1.45)
+    return label
 
 
 def compose(meta: dict, img_path: Path, w: int, h: int) -> Image.Image:
-    """Como estar frente a la obra colgada en una pared de museo: cuadro enmarcado con
-    foco cálido y sombra proyectada, y a su lado la placa (cartela) en la pared."""
+    """Una sala contemporánea: pared blanca y plana, la obra con un marco fino y negro
+    y su sombra de contacto, y la cartela impresa en la pared a su derecha."""
     scale = h / 1800.0
     pad = int(min(w, h) * PAINTING_PAD)
-    gap = int(pad * 0.9)
-    frame_t = max(10, int(min(w, h) * 0.014))
+    gap = int(pad * 1.15)
+    frame_t = max(5, int(min(w, h) * 0.0055))
 
-    # Placa deliberadamente contenida: el cuadro es el protagonista, la placa es apoyo.
-    card_w = int(min(max(w * 0.235, 540), 820))
-    card = build_card(meta, card_w, scale)
+    col_w = int(min(max(w * 0.255, 560), 780))
+    label = build_label(meta, col_w, scale)
 
-    # La pintura vive a la IZQUIERDA de la columna de la placa (nunca se tocan).
-    right_reserved = card_w + gap
+    # La obra vive a la IZQUIERDA de la columna de texto; nunca se tocan.
     area_x0 = pad + frame_t
-    area_x1 = w - pad - right_reserved
+    area_x1 = w - pad - (col_w + gap)
     avail_w = max(1, area_x1 - area_x0)
     avail_h = h - 2 * (pad + frame_t)
 
@@ -732,38 +842,30 @@ def compose(meta: dict, img_path: Path, w: int, h: int) -> Image.Image:
     px = area_x0 + (avail_w - new_w) // 2
     py = (pad + frame_t) + (avail_h - new_h) // 2
 
-    # Pared + haz de luz de museo centrado en el cuadro.
     wall = make_background(w, h)
-    wall = _light_pool(wall, px + new_w // 2, py + int(new_h * 0.45),
-                       int(new_w * 0.95), int(new_h * 0.9))
+    wall = _wall_light(wall, px + new_w // 2, py, int(new_w * 1.15))
     canvas = wall.convert("RGBA")
 
-    # Sombra proyectada del cuadro sobre la pared (colgado, luz desde arriba).
+    # Sombra de contacto: corta y pegada al marco, como una obra bien colgada.
     sh = Image.new("RGBA", (w, h), (0, 0, 0, 0))
     ImageDraw.Draw(sh).rectangle(
-        [px - frame_t, py - frame_t + int(frame_t * 0.5),
-         px + new_w + frame_t, py + new_h + frame_t + int(frame_t * 1.6)],
-        fill=(0, 0, 0, 115))
-    sh = sh.filter(ImageFilter.GaussianBlur(radius=int(frame_t * 1.3)))
+        [px - frame_t, py - frame_t + int(frame_t * 0.8),
+         px + new_w + frame_t, py + new_h + frame_t + int(frame_t * 1.4)],
+        fill=(0, 0, 0, 74))
+    sh = sh.filter(ImageFilter.GaussianBlur(radius=max(2, int(frame_t * 1.5))))
     canvas = Image.alpha_composite(canvas, sh)
 
     canvas = canvas.convert("RGB")
     draw_frame(canvas, px, py, new_w, new_h, frame_t)
     canvas.paste(painting, (px, py))
-    # re-dibuja el rebaje interior por encima del lienzo
-    ImageDraw.Draw(canvas).rectangle([px - 1, py - 1, px + new_w, py + new_h],
-                                     outline=(30, 22, 10), width=2)
 
-    # Placa (cartela) en la pared, a la derecha, con su sombra.
-    card_x = w - pad - card_w
-    card_y = max(pad, (h - card.height) // 2)
-    csh = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-    ImageDraw.Draw(csh).rounded_rectangle(
-        [card_x, card_y + int(6 * scale), card_x + card_w, card_y + card.height + int(12 * scale)],
-        radius=int(14 * scale), fill=(0, 0, 0, 80))
-    csh = csh.filter(ImageFilter.GaussianBlur(radius=int(13 * scale)))
-    canvas = Image.alpha_composite(canvas.convert("RGBA"), csh)
-    canvas.alpha_composite(card, (int(card_x), int(card_y)))
+    # Cartela: centrada verticalmente contra la obra, para que las dos lean como una
+    # sola banda horizontal y el vacío se reparta arriba y abajo (no se acumule debajo).
+    label_x = w - pad - col_w
+    label_y = py + (new_h - label.height) // 2
+    label_y = max(pad, min(label_y, h - pad - label.height))
+    canvas = canvas.convert("RGBA")
+    canvas.alpha_composite(label, (int(label_x), int(label_y)))
     return canvas.convert("RGB")
 
 
@@ -817,6 +919,7 @@ def prune_outputs(keep: int = 4) -> None:
 # ---------------------------------------------------------------------------
 def run_once(forced_id: str | None) -> None:
     catalog = load_catalog()
+    catalog_size = len(catalog)          # --id filtra el catálogo; la ventana no debe encogerse
     if forced_id:
         catalog = [a for a in catalog if a["id"] == forced_id] or sys.exit(
             f"No existe una obra con id '{forced_id}'.")
@@ -846,8 +949,10 @@ def run_once(forced_id: str | None) -> None:
         out = OUT_DIR / f"wall-{time.strftime('%Y%m%d-%H%M%S')}-{art['id']}.jpg"
         wall.save(out, "JPEG", quality=95)
         prune_outputs()
+        prune_cache()
         set_wallpaper(out)
-        write_state({"recent": ([art["id"]] + state.get("recent", []))[:RECENT_MEMORY]})
+        keep = recent_window(catalog_size)
+        write_state({"recent": ([art["id"]] + state.get("recent", []))[:keep]})
         print(f"Listo: {out}")
         return
 
@@ -894,10 +999,15 @@ def main() -> None:
     ap.add_argument("--once", action="store_true")
     ap.add_argument("--id")
     ap.add_argument("--selftest", action="store_true")
+    ap.add_argument("--compact", action="store_true",
+                    help="reduce el caché ya existente y aplica el techo de tamaño")
     args = ap.parse_args()
 
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
-    if args.selftest:
+    META_DIR.mkdir(parents=True, exist_ok=True)
+    if args.compact:
+        compact_cache()
+    elif args.selftest:
         selftest()
     else:
         run_once(args.id)
